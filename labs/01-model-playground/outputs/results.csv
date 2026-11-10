@@ -1,0 +1,358 @@
+run_id,note_id,project,category,model,setting,summary,input_tokens,output_tokens,cost_usd,latency_s
+dbt-core-01|gpt-6-luna|run1,dbt-core-01,dbt-core,analytics,gpt-6-luna,run1,"- **Behavior change:** `dbt build --write-catalog` writes `catalog.json` again.
+- The dbt and dbt-oss PyPI wheels now support Python 3.10 as the minimum version.
+- Fixed spurious `TableNotFound` errors during analyze when MapReduce dropped a key before the driver observed a worker’s connection report.
+- Added test helpers for creating programmatic integration-test projects.",332,188,0.000127,3.06
+dbt-core-02|gpt-6-luna|run1,dbt-core-02,dbt-core,analytics,gpt-6-luna,run1,"- **Behavior change:** dbt v2 CLI branding now distinguishes dbt (proprietary) from dbt-oss (open source); version/help output and some messages use the new names.
+- Agent skills can be installed from packages and project skill paths when packages are installed, if the `ai_provider` flag is enabled.
+- Databricks now supports native metric view materializations. ClickHouse adds connection settings and other support through the `adbc_clickhouse` driver.
+- The dbt-docs-server Docker image now downloads and verifies a released dbt binary, supports multi-architecture builds, and runs as an unprivileged user. The documented build command works from the repo root or crate directory.
+- Quiet-mode inline compile commands now preserve compiled SQL output.",768,232,0.000193,2.71
+segment-analytics-next-03|gpt-6-luna|run1,segment-analytics-next-03,segment-analytics-next,analytics,gpt-6-luna,run1,"- **Behavior change:** When the cookie and localStorage disagree on `anonymousId`, the cookie now always wins and all stores are resynced to it.
+- The `resolveAnonymousIdConflicts` option has been removed; setting it to `false` is ignored.",340,92,0.000080,1.80
+segment-analytics-next-04|gpt-6-luna|run1,segment-analytics-next-04,segment-analytics-next,analytics,gpt-6-luna,run1,"- **Behavior change:** The new opt-in `user.resolveAnonymousIdConflicts` option makes the shared cookie win when it disagrees with other `anonymousId` stores, then resyncs those stores. It’s off by default; otherwise behavior is unchanged.
+- **Behavior change:** Email-format detection used by `identify`, `track`, `page`, and `group` becomes stricter, with some values potentially classified differently.
+- Updated the transitive `is-email` dependency from 0.1.1 to 1.0.2.",734,154,0.000150,1.98
+posthog-js-05|gpt-6-luna|run1,posthog-js-05,posthog-js,analytics,gpt-6-luna,run1,"- **Behavior change:** Session replay continues processing mutation batches when removals have the wrong parent or additions target a leaf node.
+- Fixed session replay failing to rebuild a snapshot when the replay document already has a root element.
+- Buffered text changes are now collapsed to the final value per node, and attribute mutation storage is simplified.",433,157,0.000122,2.26
+posthog-js-06|gpt-6-luna|run1,posthog-js-06,posthog-js,analytics,gpt-6-luna,run1,"- **Behavior change:** `metrics.histogram()` supports custom bucket boundaries. The first sample fixes the bounds until the client resets; later samples with different bounds use the fixed buckets and log a warning, while invalid bounds are dropped. `beforeSend` can view and change the bounds.
+- **Behavior change:** The experimental `posthog.flags.request.duration` histogram now uses buckets from 50 ms to 10,000 ms, allowing p50 and p95 to resolve between 50 ms and 5 s. Its bucket change is allowed under its experimental status.
+- Updated dependencies: `@posthog/core` 1.64.0 and `@posthog/types` 1.421.0.",442,209,0.000149,2.42
+fides-07|gpt-6-luna|run1,fides-07,fides,privacy,gpt-6-luna,run1,"- Fixed DSRs getting stuck when an async task’s connection config is deleted or disabled.
+- Fixed property form paths not saving and actions not working during property creation.
+- Fixed troubleshooting data downloads to stream the diagnostics ZIP directly instead of uploading it to storage.
+- Fixed the watchdog incorrectly erroring privacy requests paused for manual input, and connection config updates requeuing manual-task DSRs.
+- Fixed retries recreating missing erasure tasks when task creation fails silently.",315,167,0.000115,2.28
+fides-08|gpt-6-luna|run1,fides-08,fides,privacy,gpt-6-luna,run1,"- **Behavior change:** Database connections now use `DBCredentialProvider` for dynamic credential resolution, with credentials resolved per connection.
+- Added a `SecretProvider` abstraction and an AWS Secrets Manager provider.
+- Added a configurable `pool_recycle` setting for database connections.
+- Changed the API client comment label to make clear comments come from the API client, not the user.",337,132,0.000100,2.03
+presidio-09|gpt-6-luna|run1,presidio-09,presidio,privacy,gpt-6-luna,run1,"- **Breaking:** Python 3.10 is no longer supported; packages require Python 3.11–3.14. Saved spaCy pipelines that reference `hf_token_pipe` no longer load; the factory is now `presidio_hf_token_pipe`. Pillow now requires `>=13,<14`.
+- **Behavior change:** Default analyzer and anonymizer images no longer include `curl`; their healthchecks use Python to probe `/health` and ignore `HTTP_PROXY`. Distroless variants are also published with `-distroless` tags and run as UID 65532.
+- Analyzer YAML can now optionally configure `LemmaContextAwareEnhancer` parameters; configurations without the section retain existing defaults.
+- **Security:** Container images were hardened, reducing reported Trivy findings; distroless images have 1 finding for the anonymizer and 6 for the analyzer. Dependency locks were refreshed, and Pillow and Transformers security fixes were included.
+- **Fixed:** Documentation publishing no longer removes the custom-domain `CNAME`; the sitemap and canonical links use that domain. Corrected the documented source-built anonymizer port mapping to container port 3000.",1293,540,0.000399,5.45
+presidio-10|gpt-6-luna|run1,presidio-10,presidio,privacy,gpt-6-luna,run1,"- **Behavior change:** DICOM metadata is now filtered using both `is_patient` and `is_name` checks instead of being treated unconditionally as PHI. Regex execution now has a configurable timeout, defaulting to 60 seconds.
+- Added Hugging Face and medical NER recognizers, plus recognizers for US NPI, UK postcodes and identity documents, and Nigerian identification and vehicle registration.
+- Added ONNX Runtime support for GLiNER, GPU/CPU selection, and evaluation tools for sampling, datasets, and LLM-as-a-judge assessment.
+- **Security:** Fixed four listed vulnerabilities, including two Starlette CVEs. Pinned CI/CD actions, Docker base images, and selected pip installs.
+- Published `presidio` as a PyPI meta-package that installs `presidio-analyzer` and `presidio-anonymizer`; also fixed documentation links and an Italian driver’s license regex.",1050,314,0.000262,3.45
+dbt-core-01|gpt-6-luna|run2,dbt-core-01,dbt-core,analytics,gpt-6-luna,run2,"- **Behavior change:** The dbt and dbt-oss PyPI wheels now support Python 3.10 as their minimum version.
+- **Behavior change:** `dbt build --write-catalog` writes `catalog.json` again.
+- Fixed spurious `TableNotFound` errors during analyze when the driver had not yet observed a worker’s connection report.
+- Added test helpers for creating programmatic integration-test projects.",332,183,0.000125,2.24
+dbt-core-02|gpt-6-luna|run2,dbt-core-02,dbt-core,analytics,gpt-6-luna,run2,"- **Behavior change:** The dbt v2 CLI now uses “dbt” and “dbt-oss” branding in version/help output and replaces several Fusion-branded messages.
+- Agent skills can be installed from packages and project `skill-paths` when packages are installed; this is gated by the new `ai_provider` flag.
+- Added support for native Databricks metric view materializations.
+- ClickHouse support adds connection-level settings, profile-schema default database, literal `?` in SQL, and a dbt HTTP User-Agent, using the new `adbc_clickhouse` driver.
+- Fixes preserve compiled SQL output for inline compile commands in quiet mode and update the dbt-docs-server Docker image and build instructions.",768,260,0.000207,3.17
+segment-analytics-next-03|gpt-6-luna|run2,segment-analytics-next-03,segment-analytics-next,analytics,gpt-6-luna,run2,"- **Behavior change:** When the cookie and localStorage have different `anonymousId` values, the cookie now always wins and all stores are resynced to it. Previously, localStorage’s value won permanently.
+- The `resolveAnonymousIdConflicts` option has been removed; any setting of it is ignored. When the cookie and localStorage agree, behavior is unchanged.",340,123,0.000096,1.63
+segment-analytics-next-04|gpt-6-luna|run2,segment-analytics-next-04,segment-analytics-next,analytics,gpt-6-luna,run2,"- **Behavior change:** The new opt-in `user.resolveAnonymousIdConflicts` option makes the shared cookie win when it disagrees with other anonymous ID stores, then resyncs those stores. It’s off by default; when stores agree, behavior is unchanged.
+- **Behavior change:** Email-format detection used by `identify`, `track`, `page`, and `group` is stricter after upgrading `is-email` from 0.1.1 to 1.0.2. Some values may be classified differently; verify integrations that rely on this detection.",734,173,0.000160,2.26
+posthog-js-05|gpt-6-luna|run2,posthog-js-05,posthog-js,analytics,gpt-6-luna,run2,"- **Behavior change:** Session replay continues processing mutation batches when removals have the wrong parent or additions target a leaf node.
+- **Behavior change:** Session replay can rebuild a snapshot when the replay document already has a root element.
+- **Behavior change:** Buffered text changes are collapsed to the final value per node, and attribute mutation storage is simplified.",433,137,0.000112,1.93
+posthog-js-06|gpt-6-luna|run2,posthog-js-06,posthog-js,analytics,gpt-6-luna,run2,"- **Behavior change:** `metrics.histogram()` now accepts `bounds` to set bucket boundaries, which `beforeSend` can inspect or change. The first sample fixes the bounds for that histogram until the client resets; samples with different bounds use the fixed buckets and log a warning, while invalid bounds are dropped.
+- **Behavior change:** The experimental `posthog.flags.request.duration` histogram now uses specified millisecond buckets, allowing its p50 and p95 to resolve between 50 ms and 5 s.
+- Updated dependencies: `@posthog/core` 1.64.0 and `@posthog/types` 1.421.0.",442,235,0.000162,2.74
+fides-07|gpt-6-luna|run2,fides-07,fides,privacy,gpt-6-luna,run2,"- **Behavior change:** On retry, missing erasure tasks are recreated from the current graph.
+- **Behavior change:** Troubleshooting ZIPs are streamed directly instead of uploaded to storage.
+- Fixed privacy requests getting stuck or incorrectly errored around disabled/deleted connection configs, manual tasks, and manual webhooks.
+- Fixed property form paths not saving and actions not working during property creation.",315,155,0.000109,2.05
+fides-08|gpt-6-luna|run2,fides-08,fides,privacy,gpt-6-luna,run2,"- **Behavior change:** Database connections now resolve credentials through `DBCredentialProvider`, using SQLAlchemy’s creator pattern for per-connection resolution.
+- **Behavior change:** API client comments have a clearer label distinguishing them from user comments.
+- Added a `SecretProvider` abstraction with an AWS Secrets Manager provider.
+- Added dynamic database credential resolution via AWS Secrets Manager.
+- Added a configurable `pool_recycle` setting for database connections.",337,209,0.000138,2.42
+presidio-09|gpt-6-luna|run2,presidio-09,presidio,privacy,gpt-6-luna,run2,"- **Breaking:** Python 3.10 is no longer supported; packages require Python `>=3.11,<3.15`. Saved spaCy pipelines that reference `hf_token_pipe` no longer load; detection results and scores are unchanged.
+- **Behavior change:** Default analyzer and anonymizer images no longer include `curl`; their healthchecks use Python to probe `/health`, and Compose now uses the image healthchecks.
+- **Added:** Distroless analyzer and anonymizer images are available with `-distroless` tags. They run Python 3.12 as UID 65532 and use `GUNICORN_CMD_ARGS` for gunicorn settings.
+- **Added:** Analyzer YAML can now configure `LemmaContextAwareEnhancer` parameters through an optional `context_aware_enhancer` section.
+- **Security:** Default images were hardened, and distroless images further reduce reported Trivy findings. Dependency locks were refreshed; the Image Redactor now requires Pillow `>=13.0.0,<14.0.0`.",1293,573,0.000416,5.84
+presidio-10|gpt-6-luna|run2,presidio-10,presidio,privacy,gpt-6-luna,run2,"- **Behavior change:** Regex execution now has a configurable timeout, defaulting to 60 seconds. Image Redactor now filters DICOM metadata using both `is_patient` and `is_name` checks.
+- Published `presidio` as a PyPI meta-package that installs the analyzer and anonymizer.
+- Added Hugging Face and medical NER support, plus recognizers for US, UK, and Nigerian identifiers.
+- Added ONNX Runtime support for GLiNER, GPU/CPU selection, and evaluation tools for sampling, datasets, and LLM-as-a-judge assessment.
+- Fixed Starlette vulnerabilities and other CVEs, documentation links, an Italian driver-license regex, and context substring matching. Also pinned CI/CD dependencies and Docker base images.",1050,425,0.000318,4.53
+dbt-core-01|gpt-6-luna|run3,dbt-core-01,dbt-core,analytics,gpt-6-luna,run3,"- **Behavior change:** dbt and dbt-oss PyPI wheels now support Python 3.10 as the minimum version.
+- **Behavior change:** `dbt build --write-catalog` writes `catalog.json` again.
+- Fixed spurious `TableNotFound` errors during analyze when MapReduce dropped a key before the driver observed the worker’s connection report.
+- Added test helpers for creating programmatic integration test projects.",332,187,0.000127,2.40
+dbt-core-02|gpt-6-luna|run3,dbt-core-02,dbt-core,analytics,gpt-6-luna,run3,"- **Behavior change:** The dbt v2 CLI now uses “dbt” and “dbt-oss” branding instead of “Fusion” and “dbt-core” in version/help output and several warnings and errors.
+- Agent skills can be installed from packages and project `skill-paths` when packages are installed, gated by the `ai_provider` flag.
+- Added native Databricks metric view materializations and ClickHouse support for connection settings, profile-schema default databases, literal `?` in SQL, and dbt identification in the HTTP User-Agent.
+- Fixed quiet-mode inline compile commands so they preserve compiled SQL output.
+- Updated the dbt-docs-server Docker image to download and verify a released dbt binary; the documented build command now works from the repo root or crate directory.",768,243,0.000198,2.85
+segment-analytics-next-03|gpt-6-luna|run3,segment-analytics-next-03,segment-analytics-next,analytics,gpt-6-luna,run3,"- **Behavior change:** The `resolveAnonymousIdConflicts` option was removed, and its behavior is now always enabled: when the cookie and localStorage have different `anonymousId` values, the cookie wins and all stores are resynced to it. Any `resolveAnonymousIdConflicts: false` setting is ignored.",340,110,0.000089,1.66
+segment-analytics-next-04|gpt-6-luna|run3,segment-analytics-next-04,segment-analytics-next,analytics,gpt-6-luna,run3,"- **Behavior change:** The new opt-in `user.resolveAnonymousIdConflicts` option makes the shared cookie win when it disagrees with other stores, then syncs those stores to the cookie. It’s off by default; without it, behavior is unchanged.
+- **Behavior change:** Updating the email-detection dependency makes `@segment/facade`’s email-format checks stricter, with a 320-character limit. Some values may be classified differently.
+- The transitive `is-email` dependency was updated from 0.1.1 to 1.0.2.",734,208,0.000177,2.42
+posthog-js-05|gpt-6-luna|run3,posthog-js-05,posthog-js,analytics,gpt-6-luna,run3,"- **Behavior change:** Session replay continues processing mutation batches when a removal has the wrong parent or an addition targets a leaf node.
+- **Behavior change:** Buffered text changes are collapsed to the final value per node, and attribute mutation storage is simplified.
+- Fixed session replay snapshot rebuilding when the replay document already has a root element.",433,123,0.000105,1.71
+posthog-js-06|gpt-6-luna|run3,posthog-js-06,posthog-js,analytics,gpt-6-luna,run3,"- **Behavior change:** `metrics.histogram()` accepts custom bucket boundaries through `bounds`, which `beforeSend` can also change. The first sample fixes the bounds until the client resets; later samples with different bounds use the fixed buckets and log a warning, while invalid bounds are dropped.
+- **Behavior change:** The experimental `posthog.flags.request.duration` histogram now uses buckets from 50 ms to 10,000 ms, so its p50 and p95 resolve between 50 ms and 5 seconds.
+- Updated `@posthog/core` to 1.64.0 and `@posthog/types` to 1.421.0.",442,201,0.000145,2.58
+fides-07|gpt-6-luna|run3,fides-07,fides,privacy,gpt-6-luna,run3,"- **Behavior change:** Manual-input privacy requests are no longer incorrectly errored or requeued by the watchdog or connection config updates.
+- **Behavior change:** Missing erasure tasks are recreated from the current graph on retry, preventing privacy requests from remaining stuck after silent task-creation failures.
+- Fixed stuck DSRs when an async task’s connection config is deleted or disabled.
+- Fixed property form paths not saving and actions not working during property creation.
+- Troubleshooting data now streams directly as a ZIP download instead of being uploaded to storage.",315,169,0.000116,2.26
+fides-08|gpt-6-luna|run3,fides-08,fides,privacy,gpt-6-luna,run3,"- **Behavior change:** All database connections now use `DBCredentialProvider` for dynamic credential resolution; database engines use SQLAlchemy’s creator pattern to resolve credentials per connection.
+- Added a `SecretProvider` abstraction and an AWS Secrets Manager provider.
+- Added configurable `pool_recycle` for database connections.
+- Changed API client comment labels to make clear the comments are from the API client, not the user.",337,130,0.000099,1.73
+presidio-09|gpt-6-luna|run3,presidio-09,presidio,privacy,gpt-6-luna,run3,"- **Breaking:** Python 3.10 is no longer supported. Packages require Python `>=3.11,<3.15`; Python 3.10 users resolve to previous releases.
+- **Breaking:** `TransformersNlpEngine` now registers `presidio_hf_token_pipe` instead of `hf_token_pipe`; spaCy pipelines saved with the old factory reference no longer load. Detection results and scores are unchanged.
+- Added distroless analyzer and anonymizer images, tagged `-distroless`. They run Python 3.12 as UID 65532, listen on port 3000, and use `GUNICORN_CMD_ARGS` for gunicorn settings.
+- **Behavior change:** Default analyzer and anonymizer images no longer include `curl`; their healthchecks use Python to probe `/health`, ignoring `HTTP_PROXY`. Compose healthcheck overrides were removed.
+- Security updates include hardened default images, refreshed dependency locks, Transformers 5.16.1, and a Pillow requirement of `>=13.0.0,<14.0.0`; the DICOM redactor now uses Pillow’s `get_flattened_data()`.",1293,618,0.000438,6.14
+presidio-10|gpt-6-luna|run3,presidio-10,presidio,privacy,gpt-6-luna,run3,"- **Behavior change:** Regex execution now has a configurable timeout, defaulting to 60 seconds. Image redaction now checks both patient and name fields when filtering DICOM metadata.
+- **Added:** A `presidio` PyPI package that installs the analyzer and anonymizer, plus new recognizers for medical entities, US NPI, UK postcodes and passports, UK and Nigerian vehicle registrations, and Nigerian NINs.
+- **Added:** Hugging Face NER inference, GLiNER ONNX support, GPU/CPU selection, and evaluation tools for datasets, sampling, and LLM-as-a-judge assessments.
+- **Security:** Fixed several CVEs and pinned CI/CD actions, Docker base images, and selected Python installs to specific versions or hashes.
+- **Fixed:** Italian driver’s license matching, context matching, exception handling, API type hints, and broken documentation links.",1050,519,0.000365,6.15
+dbt-core-01|gpt-6-sol|run1,dbt-core-01,dbt-core,analytics,gpt-6-sol,run1,"- **Behavior change:** `dbt build --write-catalog` writes `catalog.json` again; it had been silently skipped since preview 2.0.0-preview.218.
+- **Behavior change:** The minimum supported Python version for the dbt and dbt-oss PyPI wheels is now 3.10.
+- Fixed spurious `TableNotFound` errors during analyze.
+- Added test helpers for programmatic integration test projects.",332,240,0.003064,3.35
+dbt-core-02|gpt-6-sol|run1,dbt-core-02,dbt-core,analytics,gpt-6-sol,run1,"- **Behavior change:** dbt v2 CLI branding now uses “dbt” for the proprietary version and “dbt-oss” for OSS. Version, help, and some warning and error messages have been updated.
+- **Behavior change:** The new ClickHouse driver adds connection-level settings and synchronous-operation defaults, uses the profile schema as the default database, supports literal `?` in SQL, and identifies dbt in the HTTP User-Agent.
+- Agent skills can be installed from packages and project `skill-paths` when packages are installed, if the new `ai_provider` flag is enabled. Native Databricks metric view materializations are also supported.
+- Inline compile commands now preserve compiled SQL output in quiet mode.
+- The dbt-docs-server Docker image now downloads and verifies a released dbt binary, tracks the newest release with a Linux binary, and includes build and container improvements.",768,324,0.004776,3.14
+segment-analytics-next-03|gpt-6-sol|run1,segment-analytics-next-03,segment-analytics-next,analytics,gpt-6-sol,run1,"- **Behavior change:** When the cookie and localStorage disagree on `anonymousId`, the cookie now always wins and all stores are resynced to it. This is no longer opt-in; when they agree, behavior is unchanged.
+- The `resolveAnonymousIdConflicts` option has been removed. If set to `false` in load options, it is now ignored.",340,120,0.001880,1.94
+segment-analytics-next-04|gpt-6-sol|run1,segment-analytics-next-04,segment-analytics-next,analytics,gpt-6-sol,run1,"- **Behavior change:** Email-format detection for `identify`, `track`, `page`, and `group` is stricter after the `is-email` dependency update. Some trait values may be classified differently.
+- **Behavior change (opt-in):** A new `resolveAnonymousIdConflicts` load option lets the shared cookie’s `anonymousId` win when it disagrees with other stores, then resyncs them. It is off by default; default behavior is unchanged.",734,159,0.003058,2.38
+posthog-js-05|gpt-6-sol|run1,posthog-js-05,posthog-js,analytics,gpt-6-sol,run1,"- **Behavior change:** Session replay continues processing mutation batches when a removal has the wrong parent or an addition targets a leaf node.
+- **Behavior change:** Buffered text changes are collapsed to each node’s final value; attribute mutation storage is simplified.
+- Fixed session replay failing to rebuild a snapshot when the replay document already has a root element.",433,220,0.003066,2.99
+posthog-js-06|gpt-6-sol|run1,posthog-js-06,posthog-js,analytics,gpt-6-sol,run1,"- **Behavior change:** The experimental `posthog.flags.request.duration` histogram uses new bucket boundaries. Its p50 and p95 now resolve between 50 ms and 5 s.
+- **Behavior change:** A histogram’s first sample fixes its bounds until the client resets. Later samples with different bounds use those fixed buckets and log a warning; samples with invalid bounds are dropped.
+- `metrics.histogram()` now accepts a `bounds` option, which `beforeSend` can inspect and change.
+- Updated `@posthog/core` to 1.64.0 and `@posthog/types` to 1.421.0.",442,204,0.002924,2.67
+fides-07|gpt-6-sol|run1,fides-07,fides,privacy,gpt-6-sol,run1,"- **Behavior change:** “Download troubleshooting data” now streams the diagnostics ZIP directly instead of uploading it to storage.
+- Fixed privacy requests getting stuck when an async task connection is deleted or disabled, or when erasure task creation fails.
+- Fixed paused requests being incorrectly marked as errors by the watchdog, and connection updates incorrectly requeuing manual-task requests.
+- Fixed property form paths not saving and actions not working during property creation.",315,150,0.002130,2.13
+fides-08|gpt-6-sol|run1,fides-08,fides,privacy,gpt-6-sol,run1,"- **Behavior change:** All database connections now go through DBCredentialProvider. Database engines use SQLAlchemy’s creator pattern to resolve credentials per connection.
+- **Behavior change:** API client comments now have a label that distinguishes them from user comments.
+- Added a SecretProvider abstraction and an AWS Secrets Manager provider for dynamic database credentials.
+- Added a configurable `pool_recycle` setting for database connections.",337,239,0.003064,2.45
+presidio-09|gpt-6-sol|run1,presidio-09,presidio,privacy,gpt-6-sol,run1,"- **Breaking:** Python 3.10 is no longer supported. All packages now require Python 3.11 through 3.14.
+- **Breaking:** Saved spaCy pipelines that reference `hf_token_pipe` no longer load; the analyzer now uses `presidio_hf_token_pipe`. Requirements for the `transformers` and `gliner` extras also changed.
+- **Behavior change:** Default analyzer and anonymizer images no longer include `curl`. Their built-in healthchecks use Python to probe `/health` and ignore `HTTP_PROXY`.
+- Distroless analyzer and anonymizer images are now available alongside the unchanged default image tags. Analyzer YAML configuration can now set context-aware enhancer parameters.
+- Security updates hardened the container images and refreshed locked dependencies. Image Redactor now requires Pillow 13.x.",1293,475,0.007336,5.32
+presidio-10|gpt-6-sol|run1,presidio-10,presidio,privacy,gpt-6-sol,run1,"- **Behavior change:** DICOM name processing now uses both `is_patient` and `is_name` checks instead of treating all metadata as PHI.
+- **Behavior change:** Context words no longer match as substrings. A regex fix also restores missed Italian driver-license matches.
+- Fixed four reported CVEs, including two Starlette vulnerabilities.
+- Added a `presidio` PyPI package that installs Analyzer and Anonymizer, plus new HuggingFace, medical, and country-specific recognizers.
+- Added an ONNX backend for GLiNER, a configurable regex timeout, GPU/CPU selection, and evaluation features.",1050,278,0.004880,3.47
+dbt-core-01|gpt-6-sol|run2,dbt-core-01,dbt-core,analytics,gpt-6-sol,run2,"- **Behavior change:** `dbt build --write-catalog` writes `catalog.json` again; it had been silently skipped since 2.0.0-preview.218.
+- The dbt and dbt-oss PyPI wheels now support Python 3.10.
+- Fixed spurious `TableNotFound` errors during analyze.
+- Added helpers for programmatic integration test projects.",332,163,0.002294,2.26
+dbt-core-02|gpt-6-sol|run2,dbt-core-02,dbt-core,analytics,gpt-6-sol,run2,"- **Behavior change:** The dbt v2 CLI now uses “dbt” for the proprietary version and “dbt-oss” for the open-source version in help, version, and some warning and error messages.
+- **Behavior change:** With the new `ai_provider` flag, installing packages also installs agent skills from those packages and the project’s `skill-paths`.
+- **Behavior change:** ClickHouse now supports connection settings and synchronous-operation defaults through the new driver; its default database follows the profile schema.
+- Databricks now supports native metric view materializations. Quiet-mode inline compile commands now preserve compiled SQL output.
+- The dbt-docs-server Docker image now uses a verified released dbt binary and includes build, architecture, health-check, and security updates.",768,300,0.004536,4.33
+segment-analytics-next-03|gpt-6-sol|run2,segment-analytics-next-03,segment-analytics-next,analytics,gpt-6-sol,run2,"- **Behavior change:** When the cookie and localStorage have different `anonymousId` values, the cookie now wins and all stores are synced to it. Previously, localStorage could win.
+- The `resolveAnonymousIdConflicts` option has been removed; setting it to `false` is now ignored. When the values already agree, behavior is unchanged.",340,121,0.001890,1.68
+segment-analytics-next-04|gpt-6-sol|run2,segment-analytics-next-04,segment-analytics-next,analytics,gpt-6-sol,run2,"- **Behavior change:** Email-format detection in `@segment/facade` is stricter after a dependency update. Some trait values may be classified differently when processing `identify`, `track`, `page`, or `group` calls.
+- **Behavior change (opt-in):** A new `user: { resolveAnonymousIdConflicts: true }` load option resolves conflicting `anonymousId` values across subdomains by using the cookie value and syncing all stores. It is off by default; default behavior is unchanged.",734,152,0.002988,1.80
+posthog-js-05|gpt-6-sol|run2,posthog-js-05,posthog-js,analytics,gpt-6-sol,run2,"- **Behavior change:** Session replay continues processing mutation batches when a removal has the wrong parent or an addition targets a leaf node.
+- **Behavior change:** Buffered text changes are collapsed to the final value for each node. Attribute mutation storage was simplified.
+- Fixed session replay failing to rebuild a snapshot when the replay document already has a root element.",433,198,0.002846,2.30
+posthog-js-06|gpt-6-sol|run2,posthog-js-06,posthog-js,analytics,gpt-6-sol,run2,"- **Behavior change:** The experimental `posthog.flags.request.duration` histogram now uses new bucket boundaries from 50 ms to 10 seconds.
+- **Behavior change:** The first sample for a histogram name and unit fixes its bucket boundaries until the client resets. Later samples with different boundaries use the fixed buckets and log a warning; samples with invalid boundaries are dropped.
+- `metrics.histogram()` now accepts a `bounds` option, and `beforeSend` can inspect and change those boundaries.",442,149,0.002374,1.81
+fides-07|gpt-6-sol|run2,fides-07,fides,privacy,gpt-6-sol,run2,"- **Behavior change:** Troubleshooting data now downloads as a streamed ZIP instead of being uploaded to storage.
+- Fixed privacy requests getting stuck when an async connection configuration is deleted or disabled, or when erasure task creation fails.
+- Fixed the watchdog flagging requests paused for manual input as errors, and connection updates requeuing manual-task requests.
+- Fixed property form paths not saving and actions not working during property creation.",315,190,0.002530,2.35
+fides-08|gpt-6-sol|run2,fides-08,fides,privacy,gpt-6-sol,run2,"- **Behavior change:** All database connections now go through `DBCredentialProvider` for dynamic credential resolution. Database engines use SQLAlchemy’s creator pattern to resolve credentials per connection.
+- **Behavior change:** API client comments now have a label that distinguishes them from user comments.
+- Added a `SecretProvider` abstraction, an AWS Secrets Manager provider, and a `DBCredentialProvider` for resolving database credentials through AWS Secrets Manager.
+- Added a configurable `pool_recycle` setting for database connections.",337,167,0.002344,2.11
+presidio-09|gpt-6-sol|run2,presidio-09,presidio,privacy,gpt-6-sol,run2,"- **Breaking:** Python 3.10 is no longer supported; all packages require Python 3.11–3.14. Image Redactor now requires Pillow 13.
+- **Breaking:** Saved spaCy pipelines that reference `hf_token_pipe` no longer load; the analyzer now uses `presidio_hf_token_pipe`. Detection results and scores are unchanged.
+- **Behavior change:** Default container images no longer include `curl`. Their healthchecks use Python, ignore `HTTP_PROXY`, and now apply in Docker Compose.
+- Distroless analyzer and anonymizer images are now available alongside the unchanged default image tags. Container hardening and dependency updates reduce reported security findings.
+- Analyzer YAML can now configure context-aware enhancement without Python code; configurations without the new section keep their previous defaults.",1293,397,0.006556,4.72
+presidio-10|gpt-6-sol|run2,presidio-10,presidio,privacy,gpt-6-sol,run2,"- **Behavior change:** DICOM metadata is no longer unconditionally treated as patient health information; name processing now checks both `is_patient` and `is_name`.
+- **Behavior change:** Context words are no longer matched as substrings. Regex execution now has a configurable timeout, defaulting to 60 seconds.
+- **Security:** Fixed the listed vulnerabilities and pinned CI/CD dependencies, Docker images, and build tools.
+- **Added:** `pip install presidio` now installs the analyzer and anonymizer. The analyzer adds HuggingFace and medical NER recognizers, ONNX support for GLiNER, and GPU/CPU selection.
+- **Added:** Recognizers for US NPI, UK postcodes, passports and vehicle registrations, and Nigerian IDs and vehicle registrations. Evaluation now supports datasets, sampling, and LLM-as-a-judge assessment.",1050,449,0.006590,5.18
+dbt-core-01|gpt-6-sol|run3,dbt-core-01,dbt-core,analytics,gpt-6-sol,run3,"- **Behavior change:** `dbt build --write-catalog` writes `catalog.json` again; it had been silently skipped since preview 2.0.0-preview.218.
+- The dbt and dbt-oss PyPI wheels now support Python 3.10 as their minimum version.
+- Fixed spurious `TableNotFound` errors during analyze.",332,161,0.002274,2.12
+dbt-core-02|gpt-6-sol|run3,dbt-core-02,dbt-core,analytics,gpt-6-sol,run3,"- **Behavior change:** dbt v2 CLI branding now uses “dbt” for proprietary and “dbt-oss” for OSS. Version, help, and some warning and error messages were updated.
+- **Behavior change:** The new ClickHouse driver adds connection settings and synchronous-operation defaults, uses the profile schema as the default database, supports literal `?` in SQL, and identifies dbt in the HTTP User-Agent.
+- Agent skills can be installed from packages and project `skill-paths` when `ai_provider` is enabled. Native Databricks metric view materializations are also supported.
+- Quiet mode now preserves compiled SQL output for inline compile commands.
+- The dbt-docs-server Docker image now uses a verified released binary; its documented build command works from either the repo root or crate directory.",768,311,0.004646,3.42
+segment-analytics-next-03|gpt-6-sol|run3,segment-analytics-next-03,segment-analytics-next,analytics,gpt-6-sol,run3,"- **Behavior change:** When the cookie and localStorage have different `anonymousId` values, the cookie now always wins and all stores are resynced to it. When they agree, behavior is unchanged.
+- The `resolveAnonymousIdConflicts` option has been removed. If set to `false`, it is now ignored.",340,121,0.001890,2.32
+segment-analytics-next-04|gpt-6-sol|run3,segment-analytics-next-04,segment-analytics-next,analytics,gpt-6-sol,run3,"- **Behavior change:** Email-format detection used when processing `identify`, `track`, `page`, and `group` calls is stricter. Some trait values may be classified differently; check your integration if it depends on that classification.
+- **Behavior change (opt-in):** A new `resolveAnonymousIdConflicts` load option resolves conflicting `anonymousId` values across subdomains by using the shared cookie’s value and syncing all stores. It is off by default, so existing behavior is unchanged unless you enable it.",734,156,0.003028,1.98
+posthog-js-05|gpt-6-sol|run3,posthog-js-05,posthog-js,analytics,gpt-6-sol,run3,"- **Behavior change:** Session replay continues processing mutation batches when a removal has the wrong parent or an addition targets a leaf node.
+- **Behavior change:** Buffered text changes are collapsed to the final value per node. Attribute mutation storage is simplified.
+- Fixed session replay failing to rebuild a snapshot when the replay document already has a root element.",433,190,0.002766,2.31
+posthog-js-06|gpt-6-sol|run3,posthog-js-06,posthog-js,analytics,gpt-6-sol,run3,"- **Behavior change:** The experimental `posthog.flags.request.duration` histogram now uses new buckets, from 50 ms to 10 s.
+- **Behavior change:** A histogram’s first sample fixes its bucket boundaries until the client resets. Later samples with different bounds use those fixed buckets and log a warning; samples with invalid bounds are dropped.
+- `metrics.histogram()` now accepts a `bounds` option to set bucket boundaries. `beforeSend` can inspect and change them.
+- Updated `@posthog/core` and `@posthog/types` dependencies.",442,189,0.002774,2.49
+fides-07|gpt-6-sol|run3,fides-07,fides,privacy,gpt-6-sol,run3,"- **Behavior change:** “Download troubleshooting data” now streams the diagnostics ZIP directly instead of uploading it to storage.
+- Fixed privacy requests getting stuck when an async connection is deleted or disabled, or when erasure task creation fails silently.
+- Fixed the watchdog incorrectly erroring requests paused for manual input, and connection updates incorrectly requeuing manual-task requests.
+- Fixed property form paths not saving and actions not working during property creation.",315,155,0.002180,2.50
+fides-08|gpt-6-sol|run3,fides-08,fides,privacy,gpt-6-sol,run3,"- **Behavior change:** All database connections now go through `DBCredentialProvider` for dynamic credential resolution. Database engines use SQLAlchemy’s creator pattern to resolve credentials per connection.
+- **Behavior change:** API client comments have a clearer label distinguishing them from user comments.
+- Added a `SecretProvider` abstraction and an AWS Secrets Manager provider.
+- Added `DBCredentialProvider` for dynamic database credential resolution through AWS Secrets Manager.
+- Added a configurable `pool_recycle` setting for database connections.",337,183,0.002504,2.22
+presidio-09|gpt-6-sol|run3,presidio-09,presidio,privacy,gpt-6-sol,run3,"- **Breaking:** All packages now require Python 3.11 or newer; Python 3.10 users resolve to previous releases.
+- **Breaking:** Saved spaCy pipelines that reference `hf_token_pipe` no longer load; the analyzer now uses `presidio_hf_token_pipe`. Detection results and scores are unchanged.
+- **Behavior change:** Default analyzer and anonymizer images no longer include `curl`. Their image healthchecks now probe `/health` using Python and ignore `HTTP_PROXY`.
+- **Added:** Optional distroless analyzer and anonymizer images are available. Analyzer YAML can now configure context-aware enhancement without Python code.
+- **Security:** Container images were hardened, development and CI dependency locks were refreshed, and Image Redactor now requires Pillow 13.",1293,281,0.005396,3.50
+presidio-10|gpt-6-sol|run3,presidio-10,presidio,privacy,gpt-6-sol,run3,"- **Behavior change:** DICOM redaction no longer treats all metadata as patient information; it checks whether a field is patient-related and a name.
+- **Behavior change:** Context words no longer match as substrings. A fix also restores missed Italian driver-license matches.
+- **Behavior change:** Regex execution has a configurable timeout, defaulting to 60 seconds.
+- **Security:** Fixed four CVEs, including two Starlette vulnerabilities, and pinned CI/CD actions and Docker base images to commit SHAs.
+- **Added:** `pip install presidio` now installs the analyzer and anonymizer. The analyzer adds HuggingFace and medical NER support, plus new US, UK, and Nigerian identifier recognizers.",1050,407,0.006170,4.98
+dbt-core-01|gpt-5.4-mini|t0.0,dbt-core-01,dbt-core,analytics,gpt-5.4-mini,t0.0,"- Behavior change: Lowered the minimum supported Python version for the dbt and dbt-oss PyPI wheels to 3.10.
+- Fix: `dbt build --write-catalog` writes `catalog.json` again.
+- Fix: Resolved spurious `TableNotFound` errors during analyze caused by MapReduce dropping a key before the driver observed the worker’s connection report.
+- Under the hood: Added `ProjectEnv::empty`, `ProjectBuilder::baseline`, and `TaskSeq::from_builder` test helpers for programmatic integration test projects.",332,118,0.000780,1.03
+dbt-core-02|gpt-5.4-mini|t0.0,dbt-core-02,dbt-core,analytics,gpt-5.4-mini,t0.0,"- **Behavior change:** dbt v2 CLI branding changes from Fusion/dbt-core to dbt (proprietary) and dbt-oss (OSS), including `--version`/`--help` output and some warning/error messages.
+- **Behavior change:** ClickHouse support now includes connection-level settings, default database wired to the profile schema, literal `?` in SQL, and `dbt/<version>` in the HTTP User-Agent, using the new `adbc_clickhouse` driver.
+- Install agent skills from installed packages and the project’s own `skill-paths` when packages are installed, gated on the new `ai_provider` flag.
+- Support native Databricks metric view materializations.
+- Fixes: preserve compiled SQL output for inline compile commands in quiet mode, and update the dbt-docs-server Docker image to download and verify a released dbt binary, with the documented build command now working from repo root or crate directory.",768,199,0.001471,1.47
+segment-analytics-next-03|gpt-5.4-mini|t0.0,segment-analytics-next-03,segment-analytics-next,analytics,gpt-5.4-mini,t0.0,"- **Behavior change:** Removed the `resolveAnonymousIdConflicts` option and made its behavior the default.
+- When the cookie and localStorage disagree on `anonymousId`, the cookie now always wins and all stores are resynced to it.
+- This only changes behavior when cookie and localStorage already disagree; when they match, nothing changes.
+- If `resolveAnonymousIdConflicts: false` was set in load options, it is now ignored.",340,95,0.000682,1.21
+segment-analytics-next-04|gpt-5.4-mini|t0.0,segment-analytics-next-04,segment-analytics-next,analytics,gpt-5.4-mini,t0.0,"- Behavior change: `@segment/facade` now uses a stricter email check for `identify`, `track`, `page`, and `group` calls. Some values that were loosely treated as email-shaped strings before may now be classified differently.
+- Added an opt-in `resolveAnonymousIdConflicts` load option, off by default, to fix `anonymousId` drifting between subdomains. When enabled, the shared cookie wins disagreements and stores are resynced to it.
+- With `resolveAnonymousIdConflicts` disabled, behavior is unchanged. When stores already agree, enabling it returns the same value as before.",734,130,0.001136,1.29
+posthog-js-05|gpt-5.4-mini|t0.0,posthog-js-05,posthog-js,analytics,gpt-5.4-mini,t0.0,"- Behavior change: Session replay now continues replaying mutation batches when a removal has the wrong parent or an addition targets a leaf node.
+- Behavior change: Session replay now rebuilds a snapshot when the replay document already has a root element.
+- Behavior change: Buffered text changes are now collapsed to the final value per node, and attribute mutation storage is simplified.",433,75,0.000662,0.85
+posthog-js-06|gpt-5.4-mini|t0.0,posthog-js-06,posthog-js,analytics,gpt-5.4-mini,t0.0,"- Behavior change: `metrics.histogram()` now accepts a `bounds` option to set histogram bucket boundaries, and `beforeSend` can see and change them.
+- Behavior change: The first histogram sample for a given name and unit fixes its bounds until the client resets; later samples with different bounds are recorded in the fixed buckets and log a warning, while invalid bounds are dropped.
+- Behavior change: `posthog.flags.request.duration` now uses new histogram bounds from 50ms to 10s, which changes its buckets.",442,110,0.000826,1.13
+fides-07|gpt-5.4-mini|t0.0,fides-07,fides,privacy,gpt-5.4-mini,t0.0,"- Behavior change: “Download troubleshooting data” now streams the diagnostics ZIP directly instead of uploading it to storage.
+- Fixed stuck DSRs when async task ConnectionConfig is deleted or disabled.
+- Fixed property form paths not saving and actions not working during property creation.
+- Fixed watchdog incorrectly erroring privacy requests paused for manual webhook or manual task input, and fixed connection config updates incorrectly requeuing manual task DSRs.
+- Fixed permanently stuck privacy requests when erasure task creation fails silently by recreating missing erasure tasks from the current graph on retry.",315,115,0.000754,1.14
+fides-08|gpt-5.4-mini|t0.0,fides-08,fides,privacy,gpt-5.4-mini,t0.0,"- **Behavior change:** All database connections now route through `DBCredentialProvider` for dynamic credential resolution.
+- **Behavior change:** Database engines now use the SQLAlchemy creator pattern for per-connection credential resolution.
+- Added a `SecretProvider` abstraction and an AWS Secrets Manager provider.
+- Added `DBCredentialProvider` for dynamic database credential resolution via AWS Secrets Manager.
+- Added a configurable `pool_recycle` setting for database connections.
+- Changed the label on API client comments to make it clearer they come from the API client, not the user.",337,114,0.000766,1.16
+presidio-09|gpt-5.4-mini|t0.0,presidio-09,presidio,privacy,gpt-5.4-mini,t0.0,"- **Breaking:** Python 3.10 support was dropped; packages now require Python `>=3.11,<3.15`.
+- **Behavior change:** The default analyzer and anonymizer images no longer contain `curl`; their healthchecks now probe `/health` with the Python standard library, and `docker-compose.yml` healthcheck overrides were removed.
+- **Behavior change:** The analyzer’s `TransformersNlpEngine` now uses an internal spaCy token-classification component, so saved spaCy pipelines that reference `hf_token_pipe` no longer load.
+- Added distroless analyzer and anonymizer images, published as `<version>-distroless` and `latest-distroless`, with a local `docker-compose.distroless.yml` override and CI e2e coverage.
+- Fixed documentation publishing so the custom `presidio.dataprivacystack.org` domain stays online, and corrected the documented `docker run` port mapping for the source-built anonymizer image.",1293,202,0.001879,1.38
+presidio-10|gpt-5.4-mini|t0.0,presidio-10,presidio,privacy,gpt-5.4-mini,t0.0,"- **Behavior change:** `pip install presidio` now works as a meta-package and installs both `presidio-analyzer` and `presidio-anonymizer`.
+- **Behavior change:** Analyzer adds new recognizers and evaluation features, including HuggingFace NER, medical NER, several country-specific ID/postcode/passport/vehicle recognizers, ONNX Runtime support for `GLiNERRecognizer`, regex timeout control, GPU device selection, LLM-as-a-judge evaluation, sampling, and a dataset interface.
+- **Behavior change:** Image Redactor now filters DICOM metadata using both `is_patient` and `is_name` checks instead of treating all metadata as PHI.
+- **Security:** Fixed multiple vulnerabilities, including Starlette CVEs and two other CVEs.
+- **Changed/Fixed:** CI/CD and Python package installs were pinned more tightly, README security guidance was updated, broken documentation links were fixed, and several analyzer bugs were corrected.",1050,198,0.001679,1.65
+dbt-core-01|gpt-5.4-mini|t0.7,dbt-core-01,dbt-core,analytics,gpt-5.4-mini,t0.7,"- Behavior change: The minimum supported Python version for the dbt and dbt-oss PyPI wheels is now 3.10.
+- Fix: `dbt build --write-catalog` writes `catalog.json` again.
+- Fix: Spurious `TableNotFound` errors during `analyze` are fixed.
+- Under the hood: Added test helpers for programmatic integration test projects.",332,84,0.000627,0.93
+dbt-core-02|gpt-5.4-mini|t0.7,dbt-core-02,dbt-core,analytics,gpt-5.4-mini,t0.7,"- **Behavior change:** dbt v2 CLI branding changes from Fusion/dbt-core to dbt (proprietary) and dbt-oss (OSS), including updated `--version`/`--help` output and some Fusion-branded warning/error messages.
+- **Behavior change:** ClickHouse now uses the new `adbc_clickhouse` driver with connection-level settings, default database wired to the profile schema, literal `?` support in SQL, and `dbt/<version>` in the HTTP User-Agent.
+- Installed package agent skills (`SKILL.md` directories) are now installed from installed packages and the project’s `skill-paths` when packages are installed, gated on the new `ai_provider` flag.
+- Native Databricks metric view materializations are now supported.
+- Fixes: inline compile commands preserve compiled SQL output in quiet mode; the dbt-docs-server Docker image now downloads and verifies a released dbt binary, and the documented `docker build` command works from the repo root or crate directory.",768,214,0.001539,1.57
+segment-analytics-next-03|gpt-5.4-mini|t0.7,segment-analytics-next-03,segment-analytics-next,analytics,gpt-5.4-mini,t0.7,"- Behavior change: Removed `resolveAnonymousIdConflicts`; its behavior is now always on.
+- Behavior change: If the cookie and localStorage disagree on `anonymousId`, the cookie wins and all stores are resynced to it.
+- Behavior change: This only affects cases where cookie and localStorage already disagree; when they match, nothing changes.
+- Behavior change: Any `resolveAnonymousIdConflicts: false` setting in load options is now ignored.",340,96,0.000687,1.18
+segment-analytics-next-04|gpt-5.4-mini|t0.7,segment-analytics-next-04,segment-analytics-next,analytics,gpt-5.4-mini,t0.7,"- **Behavior change:** `@segment/facade` now uses a stricter email check from a transitive dependency update. In rare cases, values that were previously treated as email-shaped strings may now be classified differently.
+- Added an optional `resolveAnonymousIdConflicts` setting, off by default. When enabled, it resolves `anonymousId` mismatches between subdomains by making the cookie value win and resyncing all stores.
+- With `resolveAnonymousIdConflicts` disabled, behavior stays the same. When enabled, it only changes behavior if stores already disagree.",734,120,0.001091,1.21
+posthog-js-05|gpt-5.4-mini|t0.7,posthog-js-05,posthog-js,analytics,gpt-5.4-mini,t0.7,"- Behavior change: Session replay now continues replaying mutation batches when a removal has the wrong parent or an addition targets a leaf node.
+- Behavior change: Fixed session replay failing to rebuild a snapshot when the replay document already has a root element.
+- Behavior change: Buffered text changes are now collapsed to the final value per node, and attribute mutation storage is simplified.",433,76,0.000667,0.91
+posthog-js-06|gpt-5.4-mini|t0.7,posthog-js-06,posthog-js,analytics,gpt-5.4-mini,t0.7,"- Behavior change: `metrics.histogram()` now accepts a `bounds` option to set histogram bucket boundaries, and `beforeSend` can see and change them.
+- Behavior change: The first histogram sample for a given name and unit fixes its bounds until the client resets; later samples with different bounds are recorded in the fixed buckets and log a warning, and samples with invalid bounds are dropped.
+- Behavior change: The experimental `posthog.flags.request.duration` histogram now uses new bounds from 50ms to 10s, which changes its buckets.",442,114,0.000844,1.10
+fides-07|gpt-5.4-mini|t0.7,fides-07,fides,privacy,gpt-5.4-mini,t0.7,"- Behavior change: “Download troubleshooting data” now streams the diagnostics ZIP directly instead of uploading it to storage.
+- Fixed stuck DSRs when async task ConnectionConfig is deleted or disabled.
+- Fixed property form paths not saving and actions not working during property creation.
+- Fixed watchdog incorrectly erroring privacy requests paused for manual webhook or manual task input, and fixed connection config updates incorrectly requeuing manual task DSRs.
+- Fixed permanently stuck privacy requests when erasure task creation fails silently by recreating missing erasure tasks from the current graph on retry.",315,115,0.000754,1.05
+fides-08|gpt-5.4-mini|t0.7,fides-08,fides,privacy,gpt-5.4-mini,t0.7,"- **Behavior change:** All database connections now go through the new database credential provider for dynamic credential resolution.
+- Added a SecretProvider abstraction and an AWS Secrets Manager provider.
+- Added a database credential provider for dynamic database credential resolution via AWS Secrets Manager.
+- Added a configurable `pool_recycle` setting for database connections.
+- Changed the label on API client comments to make it more obvious they are from the API client and not the user.",337,91,0.000662,0.98
+presidio-09|gpt-5.4-mini|t0.7,presidio-09,presidio,privacy,gpt-5.4-mini,t0.7,"- **Breaking:** Python 3.10 is no longer supported; packages now require Python `>=3.11,<3.15`.
+- **Breaking:** In the analyzer, `TransformersNlpEngine` now uses `presidio_hf_token_pipe` instead of `hf_token_pipe`, so spaCy pipelines saved with `nlp.to_disk()` that reference `hf_token_pipe` no longer load.
+- **Behavior change:** The default analyzer and anonymizer images no longer contain `curl`; their healthchecks now use the Python standard library and ignore `HTTP_PROXY`, and the `docker-compose.yml` healthcheck overrides were removed.
+- Distroless analyzer and anonymizer images were added, published as `<version>-distroless` and `latest-distroless`; they run Python 3.12 as UID 65532, listen on port 3000, and use `GUNICORN_CMD_ARGS`.
+- Security and fixes: default images were slimmed and security-updated; `uv.lock` files were refreshed; the docs publishing workflow no longer deletes `CNAME`; the anonymizer `docker run` port mapping was corrected; Pillow was raised to `>=13.0.0,<14.0.0` and the DICOM redactor now uses `get_flattened_data()`.",1293,269,0.002180,1.87
+presidio-10|gpt-5.4-mini|t0.7,presidio-10,presidio,privacy,gpt-5.4-mini,t0.7,"- Behavior change: `pip install presidio` now works as a meta-package and installs both `presidio-analyzer` and `presidio-anonymizer`.
+- Behavior change: Analyzer adds several new recognizers, including HuggingFace-based NER, medical NER, US NPI, UK postcode/passport/vehicle registration, and Nigerian NIN/vehicle registration.
+- Behavior change: Analyzer now supports ONNX Runtime for `GLiNERRecognizer`, configurable regex timeout, GPU device selection via environment variable, and new evaluation framework features for LLM-as-a-judge, sampling, and datasets.
+- Breaking: Security and dependency updates include fixes for multiple CVEs, plus pinned CI/CD actions, Docker base images, and Python package installs.
+- Fixed: Documentation links, analyzer bugs, and image redactor DICOM metadata filtering were corrected.",1050,174,0.001571,1.54
+dbt-core-01|gpt-5.4-mini|t1.0,dbt-core-01,dbt-core,analytics,gpt-5.4-mini,t1.0,"- Behavior change: Lowered the minimum supported Python version for the dbt and dbt-oss PyPI wheels to 3.10.
+- Fix: `dbt build --write-catalog` writes `catalog.json` again.
+- Fix: Spurious `TableNotFound` errors during analyze are fixed when MapReduce silently drops a key claimed by a worker whose connection report the driver had not yet observed.
+- Under the hood: Added `ProjectEnv::empty`, `ProjectBuilder::baseline`, and `TaskSeq::from_builder` test helpers for programmatic integration test projects.",332,122,0.000798,1.38
+dbt-core-02|gpt-5.4-mini|t1.0,dbt-core-02,dbt-core,analytics,gpt-5.4-mini,t1.0,"- Behavior change: dbt v2 CLI branding changed from Fusion/dbt-core to dbt (proprietary) and dbt-oss (OSS); `--version`/`--help` output and some Fusion-branded warning/error messages now say dbt.
+- Behavior change: ClickHouse support now includes connection-level settings, default database wired to the profile schema, literal `?` in SQL, and dbt identified as `dbt/<version>` in the HTTP User-Agent, via the new `adbc_clickhouse` driver.
+- Features: Agent skills (`SKILL.md` directories) can be installed from installed packages and the project’s own `skill-paths` when packages are installed, gated on the new `ai_provider` flag.
+- Features: Native Databricks metric view materializations are now supported.
+- Fixes: Inline compile commands now preserve compiled SQL output in quiet mode; the dbt-docs-server Docker image was updated to download and verify released dbt binaries, and the documented `docker build` command now works from the repo root or crate directory.",768,225,0.001589,1.66
+segment-analytics-next-03|gpt-5.4-mini|t1.0,segment-analytics-next-03,segment-analytics-next,analytics,gpt-5.4-mini,t1.0,"- **Behavior change:** Removed the `resolveAnonymousIdConflicts` option and made its behavior the default.
+- When cookie and localStorage disagree on `anonymousId`, the cookie now always wins and all stores are resynced to it.
+- This only changes behavior when cookie and localStorage already disagree; when they match, nothing changes.
+- If `resolveAnonymousIdConflicts: false` was set in load options, it is now ignored.",340,94,0.000678,1.04
+segment-analytics-next-04|gpt-5.4-mini|t1.0,segment-analytics-next-04,segment-analytics-next,analytics,gpt-5.4-mini,t1.0,"- **Behavior change:** `@segment/facade` now uses a stricter email check for `identify`, `track`, `page`, and `group` calls. Some values may now be classified differently as email-shaped strings.
+- Added an opt-in `resolveAnonymousIdConflicts` option, off by default, that resolves `anonymousId` conflicts between subdomains by preferring the cookie value and resyncing stores.
+- With `resolveAnonymousIdConflicts` disabled, behavior stays the same. It only changes behavior when stores already disagree.
+- Bumped a transitive `is-email` dependency to a newer version.",734,131,0.001140,1.18
+posthog-js-05|gpt-5.4-mini|t1.0,posthog-js-05,posthog-js,analytics,gpt-5.4-mini,t1.0,"- Behavior change: Session replay now continues replaying mutation batches when a removal has the wrong parent or an addition targets a leaf node.
+- Behavior change: Session replay now rebuilds a snapshot when the replay document already has a root element.
+- Behavior change: Buffered text changes are now collapsed to the final value per node, and attribute mutation storage is simplified.",433,75,0.000662,0.92
+posthog-js-06|gpt-5.4-mini|t1.0,posthog-js-06,posthog-js,analytics,gpt-5.4-mini,t1.0,"- Behavior change: `metrics.histogram()` now accepts a `bounds` option to set histogram bucket boundaries, and `beforeSend` can see and change them.
+- Behavior change: The first histogram sample for a given name and unit locks in its bounds until the client resets; later samples with different bounds use the fixed buckets and log a warning, and invalid bounds are dropped.
+- Behavior change: The experimental `posthog.flags.request.duration` histogram now uses new bounds from 50 ms to 10,000 ms.",442,108,0.000817,1.06
+fides-07|gpt-5.4-mini|t1.0,fides-07,fides,privacy,gpt-5.4-mini,t1.0,"- Behavior change: “Download troubleshooting data” now streams the diagnostics ZIP directly instead of uploading it to storage.
+- Behavior change: watchdog no longer errors on privacy requests paused for manual webhook or manual task input.
+- Behavior change: connection config updates no longer requeue manual task DSRs.
+- Fixed stuck DSRs when async task ConnectionConfig is deleted or disabled.
+- Fixed property form paths not saving and actions not working during property creation.",315,93,0.000655,0.95
+fides-08|gpt-5.4-mini|t1.0,fides-08,fides,privacy,gpt-5.4-mini,t1.0,"- **Behavior change:** All database connections now go through dynamic credential resolution.
+- **Behavior change:** Database engines now use the SQLAlchemy creator pattern for per-connection credential resolution.
+- Added a SecretProvider abstraction and an AWS Secrets Manager provider.
+- Added a DBCredentialProvider for dynamic database credential resolution via AWS Secrets Manager.
+- Added a configurable `pool_recycle` setting for database connections.
+- Changed the label on API client comments to make it more obvious they are from the API client and not the user.",337,108,0.000739,1.00
+presidio-09|gpt-5.4-mini|t1.0,presidio-09,presidio,privacy,gpt-5.4-mini,t1.0,"- **Breaking:** Python 3.10 support is dropped. All packages now require Python `>=3.11,<3.15`; Python 3.10 users stay on previous releases.
+- **Behavior change:** The default analyzer and anonymizer images no longer include `curl`. Health checks now use the Python standard library against `/health`, and `docker-compose.yml` healthcheck overrides were removed.
+- **Behavior change:** Analyzer `TransformersNlpEngine` now uses an internal spaCy token-classification component. Saved spaCy pipelines that reference `hf_token_pipe` no longer load.
+- **Behavior change:** The analyzer YAML config can now include an optional `context_aware_enhancer` section to set `LemmaContextAwareEnhancer` parameters; invalid values are rejected at parse time.
+- Security updates: distroless analyzer/anonymizer images were added, default images were slimmed and hardened, `uv.lock` files were refreshed, `transformers` was locked to 5.16.1, and Image Redactor now requires `Pillow>=13.0.0,<14.0.0`.",1293,232,0.002014,1.69
+presidio-10|gpt-5.4-mini|t1.0,presidio-10,presidio,privacy,gpt-5.4-mini,t1.0,"- Behavior change: `pip install presidio` now works as a meta-package and installs both `presidio-analyzer` and `presidio-anonymizer`.
+- Breaking: Analyzer now includes new recognizers for HuggingFace NER, medical entities, US NPI, UK postcode/passport/vehicle registration, Nigerian NIN/vehicle registration, plus ONNX Runtime support for `GLiNERRecognizer`, regex timeout control, GPU device selection, and evaluation framework additions.
+- Behavior change: Fixed a context matching bug, an Italian driver license regex anchor issue, and a DICOM metadata filtering issue in Image Redactor.
+- Security: Fixed multiple CVEs, including Starlette vulnerabilities.
+- Fixed: Documentation links and API docs/type hints were corrected, and CI/CD dependencies were pinned/updated.",1050,164,0.001525,1.50
