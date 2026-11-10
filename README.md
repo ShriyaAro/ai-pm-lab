@@ -6,6 +6,13 @@ in web analytics and measurement.
 Each lab will take public data, label it by hand, run the same task on more than one model,
 and end with a product decision: ship, don't ship, or ship with guardrails.
 
+## Why this repo
+PMs are the brain of a product, and I've watched what happens after the handoff: the idea
+passes to engineering, architects and designers, and somewhere along the way the message
+gets lost. I don't want to be a PM who only knows the words. This repo is where I get my
+hands dirty with AI, learning how things really run so I can carry an idea, intact, from my
+head to every team that builds it.
+
 ## How every lab works
 1. **Data.** Public or synthetic, with its source and license.
 2. **Labels.** A written rubric and my own pass/fail labels.
