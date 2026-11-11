@@ -17,10 +17,13 @@ import time
 from pathlib import Path
 
 from openai import OpenAI
+from dotenv import load_dotenv
+load_dotenv()
+
 
 HERE = Path(__file__).parent
 DATA = HERE / "data" / "release_notes.json"
-OUT = HERE / "outputs" / "results.csv"
+OUT = HERE / "outputs" / "results_my_prompt.csv"
 
 # Prices in USD per 1M tokens (input, output), standard tier.
 # Source: OpenAI API pricing page, read 2026-11-10.
@@ -38,14 +41,7 @@ PROVIDERS = {
     "openrouter": {"base_url": "https://openrouter.ai/api/v1", "key_env": "OPENROUTER_API_KEY"},
 }
 
-SYSTEM_PROMPT = """You summarize software release notes for a busy product manager.
-Rules:
-- At most 5 bullets, plain language, readable in 30 seconds.
-- Put breaking changes and behavior changes first, labeled "Breaking:" or "Behavior change:".
-- Only state what the release notes say. Do not add changes, reasons or impact that are not there.
-- Leave out commit hashes, PR numbers and contributor names."""
-
-
+SYSTEM_PROMPT = SYSTEM_PROMPT = (HERE / "my_prompt.txt").read_text(encoding="utf-8")
 def client_for(provider):
     cfg = PROVIDERS[provider]
     return OpenAI(api_key=os.environ.get(cfg["key_env"], "missing"), base_url=cfg["base_url"])
@@ -85,7 +81,7 @@ def main():
             for i, t in enumerate(cfg["settings"], start=1):
                 setting = f"run{i}" if t is None else f"t{t}"
                 for n in notes:
-                    summary, usage, latency = summarize(client, model, t, n["release_notes"])
+                    summary, usage, latency = summarize(client, model, t, f"Project: {n['project']} ({n['category']} tool)\n\n{n['release_notes']}")
                     p_in, p_out = cfg["price"]
                     cost = (usage.prompt_tokens * p_in + usage.completion_tokens * p_out) / 1e6
                     run_id = f"{n['id']}|{model}|{setting}"
