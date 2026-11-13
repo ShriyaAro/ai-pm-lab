@@ -1,0 +1,197 @@
+
+
+===== dbt-core-01 (analytics tool)
+
+Released October 14, 2026
+
+### Features
+
+- Lower the minimum supported Python version for the dbt and dbt-oss PyPI wheels to 3.10
+
+### Fixes
+
+- Fix spurious TableNotFound errors during analyze caused by MapReduce silently dropping a key claimed by a worker whose connection report the driver had not yet observed
+- `dbt build --write-catalog` writes `catalog.json` again; since the preview that shipped #13328 (first observed in 2.0.0-preview.218) the implied index default for build/check overrode the explicit flag and the catalog was silently skipped.
+
+### Under the Hood
+
+- Add ProjectEnv::empty, ProjectBuilder::baseline and TaskSeq::from_builder test helpers for programmatic integration test projects
+
+### Contributors
+- 
+- 
+- 
+- 
+
+===== dbt-core-02 (analytics tool)
+
+Released September 14, 2026
+
+### Features
+
+- Install agent skills (AgentSkills-format `SKILL.md` directories) from installed packages and the project's own `skill-paths` when packages are installed, gated on the new `ai_provider` flag. ()
+- Support native Databricks metric view materializations ()
+- [ClickHouse] Connection-level settings (profile custom_settings plus v1-parity synchronous-operation defaults), default database wired to the profile schema, literal '?' in SQL, and dbt identified as `dbt/<version>` in the HTTP User-Agent (`system.query_log.http_user_agent`), via the new adbc_clickhouse driver ()
+
+### Fixes
+
+- Preserve compiled SQL output for inline compile commands in quiet mode ()
+- Fix the dbt-docs-server Docker image: it now downloads a released dbt binary from the dbt-core GitHub Releases and verifies it against the release's published SHA256SUMS, tracking the newest release carrying a Linux binary instead of pinning a stale version (override with `--build-arg DBT_VERSION=`). The documented `docker build` command now works verbatim from either the repo root or the crate directory, a `.dockerignore` keeps the build context empty, and the image is multi-stage, multi-arch, health-checked, and runs as an unprivileged user. ()
+- Rename dbt v2 CLI branding from Fusion/dbt-core to dbt (proprietary) and dbt-oss (OSS), updating --version/--help output and several Fusion-branded warning/error messages to say dbt instead.
+
+### Contributors
+-  ()
+-  ()
+-  ()
+- 
+-  ()
+-  ()
+-  ()
+
+===== segment-analytics-next-03 (analytics tool)
+
+### Patch Changes
+
+-   Thanks ! - Removed the `resolveAnonymousIdConflicts` option, added in the previous release, and made its behavior the unconditional default: when the cookie and localStorage disagree on `anonymousId`, the cookie always wins and every store is resynced to it, instead of localStorage's value winning permanently (see #706).
+
+  **Behavior change:** this is no longer opt-in. It only changes behavior for sources where the cookie and localStorage already disagree -- when they agree (the common case), the result is unchanged. If any customer explicitly set `resolveAnonymousIdConflicts: false` in their load options, that field is now ignored (harmless); the option was only in the previous release, so no meaningful adoption window existed for anyone relying on its absence.
+
+===== segment-analytics-next-04 (analytics tool)
+
+### Patch Changes
+
+-   Thanks ! - Added an opt-in `resolveAnonymousIdConflicts` option (`user: { resolveAnonymousIdConflicts: true }` in load options), off by default, that fixes `anonymousId` diverging between subdomains of the same site (see #706).
+
+  `localStorage` is per-origin, but sits ahead of the shared, cross-subdomain cookie in the default store priority. Once the two disagree -- e.g. a per-origin `localStorage` entry drifts from the shared cookie -- whichever store sits first in priority order wins permanently, with no way for the two to resync. With this option enabled, the cookie's value wins a disagreement instead, and every store is resynced to it.
+
+  This ships off by default: with it disabled (the default), behavior is unchanged. Enabling it only changes behavior in the already-broken case where stores disagree; when they already agree, it returns the exact same value as before.
+
+*   Thanks ! - Bump the transitive `is-email` dependency (pulled in via `@segment/facade`) from 0.1.1 to 1.0.2.
+
+  This was forced because 0.1.1 (and every other 0.x release) is blocked by our npm registry's curation policy, which would otherwise prevent any release from installing.
+
+  **Behavior change:** `@segment/facade`'s internal email-format detection (used when processing `identify`/`track`/`page`/`group` calls) becomes stricter as a result. `is-email@0.1.1` used a very loose pattern (`/.+@.+\..+/`, matching almost anything shaped like `x@y.z`); `is-email@1.0.2` uses a proper RFC-5321-style pattern and caps input at 320 characters. In the rare case where a trait value was being loosely classified as an email-shaped string before, it may no longer be after this change (or vice versa, in edge cases the old pattern rejected that the stricter one accepts, like values containing `+`, `.`, or other pattern-valid characters outside the old pattern's assumptions). If you depend on this classification (directly or indirectly), verify your integration continues to see the values you expect.
+
+===== posthog-js-05 (analytics tool)
+
+### Patch Changes
+
+-   Thanks ! - Continue replaying mutation batches when a removal has the wrong parent or an addition targets a leaf node.
+  (2026-11-09)
+
+-   Thanks ! - Fix session replay failing to rebuild a snapshot when the replay document already has a root element
+  (2026-11-09)
+
+-   Thanks ! - Collapse buffered text changes to the final value per node and simplify attribute mutation storage.
+  (2026-11-09)
+
+===== posthog-js-06 (analytics tool)
+
+### Minor Changes
+
+-   Thanks ! - `metrics.histogram()` accepts a `bounds` option that sets the histogram's bucket boundaries, and `beforeSend` sees and can change them. The first sample of a histogram (name and unit) fixes its bounds until the client resets. A later sample with different bounds is recorded in the fixed buckets and logs a warning, and a sample with invalid bounds is dropped. The experimental `posthog.flags.request.duration` histogram now uses the bounds `[50, 75, 100, 150, 200, 300, 400, 500, 750, 1000, 1500, 2000, 3000, 5000, 10000]` ms, so its p50 and p95 resolve between 50ms and 5s. This changes the metric's buckets, which its experimental status allows.
+  (2026-11-05)
+
+### Patch Changes
+
+- Updated dependencies ]:
+  - @posthog/core@1.64.0
+  - @posthog/types@1.421.0
+
+===== fides-07 (privacy tool)
+
+### Fixed
+- Fixed stuck DSRs when async task ConnectionConfig is deleted or disabled 
+- Fixed property form paths not saving and actions not working during property creation 
+- Fixed "Download troubleshooting data" feature to stream diagnostics ZIP directly instead of uploading to storage, eliminating storage configuration dependency and reliability issues 
+- Fixed watchdog incorrectly erroring privacy requests paused for manual webhook or manual task input, and fixed connection config updates incorrectly requeuing manual task DSRs 
+- Fixed permanently stuck privacy requests when erasure task creation fails silently by recreating missing erasure tasks from the current graph on retry 
+
+===== fides-08 (privacy tool)
+
+### Added
+- Added SecretProvider abstraction and AWS Secrets Manager provider 
+- Add DBCredentialProvider for dynamic database credential resolution via AWS Secrets Manager 
+- Added configurable pool_recycle setting for database connections 
+
+### Changed
+- Route all database connections through DBCredentialProvider for dynamic credential resolution  https://github.com/ethyca/fides/labels/high-risk
+- Refactored database engines to use SQLAlchemy creator pattern for per-connection credential resolution 
+- Changed the label on API client comments to make it more obvious that they are from the API client and not from the user. 
+
+===== presidio-09 (privacy tool)
+
+### General
+#### Added
+- Added distroless variants of the analyzer and anonymizer container images, built from `Dockerfile.distroless` on Azure Linux and published to the same GHCR repositories as `<version>-distroless` and `latest-distroless` tags; the unsuffixed tags, including `latest`, remain the default images. The distroless images contain no shell, package manager, pip or uv, run Python 3.12 as UID 65532, listen on port 3000, and take gunicorn settings through `GUNICORN_CMD_ARGS` instead of `PORT` and `WORKERS`. A `docker-compose.distroless.yml` override runs them locally, and CI runs the e2e tests against them (#2407) (Thanks @SharonHart)
+
+#### Changed
+- Dropped Python 3.10 support, which reached end of life on 2026-10-01. All packages now require Python `>=3.11,<3.15`; Python 3.10 users resolve to the previous releases (#2409) (Thanks @SharonHart)
+- The default analyzer and anonymizer images no longer contain `curl`: the image `HEALTHCHECK` now probes `/health` with the Python standard library, ignoring any `HTTP_PROXY` settings, and the `docker-compose.yml` healthcheck overrides were removed so the image healthchecks apply (#2407) (Thanks @SharonHart)
+
+#### Fixed
+- Fixed the documentation publishing workflow deleting the `CNAME` file, which took the custom `presidio.dataprivacystack.org` domain offline after every publish; canonical links and the sitemap now use the custom domain (#2410) (Thanks @omri374)
+- Fixed the documented `docker run` port mapping for a source-built anonymizer image, which listens on container port 3000 (#2407) (Thanks @SharonHart)
+
+#### Security
+- Slimmed and hardened the default analyzer and anonymizer images: the `python:3.12-slim` and `python:3.14-slim` bases are re-pinned with OS security updates applied, uv is bind-mounted at build time instead of installed, and setuptools and wheel (plus pip in the anonymizer) are removed from the final image. This cuts the Trivy critical, high and medium findings from 321 to 103 (anonymizer) and from 345 to 113 (analyzer); the distroless images bring them down to 1 and 6 (#2407) (Thanks @SharonHart)
+- Refreshed every `uv.lock` file to fix the 100 known advisories in the locked development and CI dependencies, including `pillow` 13.0.0, `virtualenv` 21.14.13, `pyjwt` 2.15.1, `aiohttp` 3.14.5, `urllib3` 2.8.0, `cryptography` 50.0.2, `filelock` 4.2.4, `oauthlib` 4.0.0 and `certifi` 2026.10.23; apart from the `pillow` and `onnxruntime` requirements listed below, published dependency ranges are unchanged (#2409) (Thanks @SharonHart)
+
+### Analyzer
+#### Added
+- Added an optional `context_aware_enhancer` section to the analyzer YAML configuration so the `LemmaContextAwareEnhancer` parameters (`context_similarity_factor`, `min_score_with_context_similarity`, `context_prefix_count`, `context_suffix_count` and `context_matching_mode`) can be set without Python code; invalid values are rejected at parse time with an actionable message, and configurations without the section keep the previous defaults (#2373) (Thanks @MetehanAydemir)
+
+#### Changed
+- Replaced the unmaintained `spacy-huggingface-pipelines` dependency with an internal spaCy token-classification component. `TransformersNlpEngine` now registers the `presidio_hf_token_pipe` factory instead of `hf_token_pipe`, so a spaCy pipeline saved with `nlp.to_disk()` that references `hf_token_pipe` no longer loads. The `transformers` extra now requires `transformers>=4.28.0,<6.0.0`, and the `gliner` extra requires `gliner>=0.2.29` and `transformers>=4.51.3,<5.17.0`. Detection results and scores are unchanged (#2201) (Thanks @SharonHart)
+- The `gliner` extra now declares a single `onnxruntime>=1.19` requirement; the `<1.24.1` cap applied only to Python 3.10 (#2409) (Thanks @SharonHart)
+
+#### Security
+- Locked `transformers` to 5.16.1, which fixes GHSA-xrqw-3rrv-vx5w and GHSA-x9r9-c232-4q39; the published range still allows Transformers 4.x, and installing Transformers 5.10 or later is recommended to pick up the fixes (#2201) (Thanks @SharonHart)
+
+### Image Redactor
+#### Security
+- Raised the `Pillow` requirement to `>=13.0.0,<14.0.0`, which fixes the 41 security advisories (5 critical, 23 high) open against Pillow 12.3.0, and replaced the `Image.getdata()` call in the DICOM redactor with `get_flattened_data()`, since `getdata()` is deprecated in Pillow 13 and removed in Pillow 14 (#2393, #2409) (Thanks @SharonHart)
+
+===== presidio-10 (privacy tool)
+
+### General
+#### Added
+- Published `presidio` as a PyPI meta-package that installs `presidio-analyzer` and `presidio-anonymizer`, making `pip install presidio` work as expected. Inspired by and thanks to Sakthi Santhosh Anumand and Harsha Vardhan for the original idea. (#1889) (Thanks @Copilot)
+
+#### Changed
+- Pinned all CI/CD GitHub Actions and Docker base images to commit SHAs to mitigate supply chain attacks (#1861) (Thanks @Copilot)
+- Pinned `ruff` and `build` pip installs with SHA256 hashes for OSSF scorecard compliance (#1864) (Thanks @Copilot)
+- Updated GitHub Actions dependencies (`actions/checkout`, `actions/setup-python`, `actions/setup-dotnet`, `actions/cache`, `actions/github-script`, `actions/dependency-review-action`, `azure/login`, `docker/setup-buildx-action`, `github/codeql-action`, `microsoft/security-devops-action`) and base Python Docker images (#1870, #1871, #1872, #1873, #1874, #1875, #1876, #1877, #1878, #1879, #1885, #1886, #1887, #1895, #1896, #1897, #1898) (Thanks @dependabot)
+- Updated README to clarify Presidio's no-authentication-by-design stance with security guidance (#1903) (Thanks @Copilot)
+
+#### Fixed
+- Broken documentation links (#1856) (Thanks @andyjessen)
+
+#### Security
+- Fixed CVE-2024-47874 and CVE-2025-54121 (Starlette vulnerabilities) (#1860) (Thanks @SharonHart)
+- Fixed CVE-2025-2953 and CVE-2025-3730 (#1859) (Thanks @SharonHart)
+
+### Analyzer
+#### Added
+- `HuggingFaceNerRecognizer` for direct NER model inference using HuggingFace pipelines without requiring spaCy (#1834) (Thanks @ultramancode)
+- Transformer-based `MedicalNERRecognizer` as a subclass of `HuggingFaceNerRecognizer` for clinical entity detection (#1853) (Thanks @stevenelliottjr)
+- US NPI (National Provider Identifier) recognizer with Luhn checksum validation and context support (#1847) (Thanks @stevenelliottjr)
+- UK Postcode (UK_POSTCODE) recognizer with pattern matching and context support (#1858) (Thanks @tee-jagz)
+- UK Passport (UK_PASSPORT) and Vehicle Registration (UK_VEHICLE_REGISTRATION) recognizers (#1862) (Thanks @tee-jagz)
+- Nigerian National Identification Number (NG_NIN) recognizer with Verhoeff checksum validation and Nigerian Vehicle Registration (NG_VEHICLE_REGISTRATION) recognizer (#1863) (Thanks @tee-jagz)
+- ONNX Runtime backend support for `GLiNERRecognizer` via `load_onnx_model=True` parameter, resolving crashes on CPUs without AVX2 support (#1884) (Thanks @Copilot)
+- Configurable regex execution timeout (default 60 seconds) via `REGEX_TIMEOUT_SECONDS` environment variable to prevent catastrophic backtracking (#1904) (Thanks @Copilot)
+- GPU device control via environment variable for explicit GPU/CPU selection (#1844) (Thanks @RonShakutai)
+- LLM-as-a-judge evaluation integration for assessing PII detection quality (#1900) (Thanks @RonShakutai)
+- Sampling support for the evaluation framework (#1894) (Thanks @RonShakutai)
+- Dataset interface for the evaluation framework (#1893) (Thanks @RonShakutai)
+
+#### Fixed
+- Erroneous anchor in Italian driver license regex that caused missed matches (#1899) (Thanks @Br1an67)
+- `validation_result` type annotation in API docs and type hints (#1869) (Thanks @akios-ai)
+- Bare `except` clauses replaced with `except Exception` for proper exception handling (#1881) (Thanks @haosenwang1018)
+- Context enhancement substring matching bug where context words were incorrectly matched as substrings (#1827) (Thanks @ravi-jindal)
+
+### Image Redactor
+#### Fixed
+- `_process_names` unconditionally treating all DICOM metadata as PHI; now correctly filters using both `is_patient` and `is_name` checks (#1855) (Thanks @Mr-Neutr0n)
