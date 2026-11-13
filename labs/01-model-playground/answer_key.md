@@ -1,12 +1,14 @@
 \## dbt-core-01
 
-Tracking risk: yes / no / unsure (which change, or why unsure)
+Tracking risk: No
 
-Data collection changes:
+Data collection changes:No
 
-Reporting changes:
+Reporting changes:Yes
 
-Other changes:
+Other changes:Yes
 
-Most important change:
+Most important change:`dbt build 'write-catalog` writes `catalog.json` again; since the preview that shipped #13328 the implied index default for build/check overrode the explicit flag and the catalog was silently skipped.
+
+
 
