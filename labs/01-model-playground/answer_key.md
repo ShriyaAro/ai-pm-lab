@@ -38,7 +38,7 @@ Reporting changes: before and after the upgrade will impact the numbers in case 
 
 Other changes: If someone had set the option to false, that’s now ignored.
 
-Most important change: AnonymousId collection no longer opt-in 
+Most important change: Cookie’s anonymousId now automatically wins when it disagrees with localStorage (was opt-in, now always on
 
 
 
