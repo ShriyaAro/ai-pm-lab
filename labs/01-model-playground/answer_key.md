@@ -72,3 +72,15 @@ Most important change: session recordings keep only the final text per element f
 
 
 
+\## posthog-js-06
+
+Tracking risk: None, (internal changes to the histogram bounds for website metrics)
+
+Data collection changes:  None
+
+Reporting changes: None
+
+Other changes: User can set their own bounds for website metrics histogram- optional, nothing changes unless used, the experimental flags-duration metric now uses fixed buckets ranging from 50ms to 10s, applied automatically on upgrade.
+
+Most important change: the experimental flags-duration metric now uses fixed buckets ranging from 50ms to 10s, applied automatically on upgrade.
+
