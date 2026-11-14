@@ -84,3 +84,89 @@ Other changes: User can set their own bounds for website metrics histogram- opti
 
 Most important change: the experimental flags-duration metric now uses fixed buckets ranging from 50ms to 10s, applied automatically on upgrade.
 
+
+
+\## fides-07  (privacy tool)
+
+Tracking risk: None
+
+Why released: Fixing the DSRs for automated and manuals tasks
+
+Tools impacted: Fides, Compliance tools
+
+Other changes:
+
+&#x20; - Fixed the stuck DSRs when async ConnectionConfig changed (deleted or disabled)
+
+&#x20; - Watchdog no longer wrongly fails requests that are waiting for manual input
+
+&#x20; - Fides recreates the missing steps for permanently stuck tasks
+
+&#x20; - Admin interface fix
+
+&#x20; - Download troubleshooting data button fixed
+
+Most important change: Watchdog no longer wrongly fails requests that are waiting for manual input
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
