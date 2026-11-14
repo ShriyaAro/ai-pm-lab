@@ -54,3 +54,21 @@ Other changes: New optional setting (off by default): cookie wins anonymousId co
 
 Most important change: Stricter email detection 
 
+
+
+
+
+\## posthog-js-05
+
+Tracking risk: Yes, buffered text change to final node may lead to missing of some crucial in between data for teams who review in-between recordings
+
+Data collection changes:  session recordings keep only the final text per element for each batch of changes
+
+Reporting changes: None
+
+Other changes: Fixed recording replay fail, Mutation batches play fluently even with a wrong parent or odd page change, simplify attribute mutation storage
+
+Most important change: session recordings keep only the final text per element for each batch of changes
+
+
+
