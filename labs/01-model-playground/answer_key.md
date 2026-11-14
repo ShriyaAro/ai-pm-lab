@@ -110,27 +110,87 @@ Most important change: Watchdog no longer wrongly fails requests that are waitin
 
 
 
+\## fides-08  (privacy tool)
+
+Tracking risk: None (database credential and connection changes; no change to website data collection)
+
+Why released: To let Fides fetch its database credentials dynamically from AWS Secrets Manager
+
+Tools impacted: Fides' own database connections; AWS Secrets Manager (for companies that use it); admin comment labels
+
+Other changes:
+
+&#x20; - New: Fides can read secrets from AWS Secrets Manager
+
+&#x20; - New: database passwords can be looked up at each connection (supports password rotation)
+
+&#x20; - New: setting to control how often database connections are refreshed (pool\_recycle)
+
+&#x20; - Changed: all database connections now go through the new credential lookup (Fides labeled this change high-risk)
+
+&#x20; - Changed: comments from automated API clients are labeled more clearly in the admin screens
+
+Most important change: All database connections now go through the new credential lookup (automatic on upgrade; Fides labeled it high-risk)
 
 
 
 
 
+\## presidio-09  (privacy tool)
+
+Tracking risk: None (container, Python version and security changes; the notes state detection results and scores are unchanged)
+
+Why released: Security hardening (slimmer images, 100 known advisories fixed) and dropping Python 3.10 after its end of life
+
+Tools impacted: Presidio analyzer and anonymizer container images; Python environments on 3.10; Docker health checks; spaCy/Transformers NLP setup; Image Redactor; documentation site
+
+Other changes:
+
+&#x20; - Breaking: spaCy pipelines saved with the old "hf\_token\_pipe" component no longer load (replaced by "presidio\_hf\_token\_pipe")
+
+&#x20; - Dropped Python 3.10 support; packages now require Python 3.11 to 3.14 (3.10 users stay on older releases)
+
+&#x20; - New optional "distroless" images (no shell or package manager); default images unchanged
+
+&#x20; - Default images no longer include curl; health checks now use Python
+
+&#x20; - Security: default images hardened (scanner findings cut from about 345 to 113 and 321 to 103); dependency advisories fixed; Transformers and Pillow requirements raised for security fixes
+
+&#x20; - New optional analyzer setting (context\_aware\_enhancer) in the YAML config; defaults unchanged
+
+&#x20; - Fixes: docs site going offline after each publish; documented docker port mapping
+
+Most important change: Breaking: saved spaCy pipelines using "hf\_token\_pipe" no longer load after upgrade
 
 
 
 
 
+\## presidio-10  (privacy tool)
 
+Tracking risk: Unsure (new recognizers and detection fixes can change which personal data gets detected and redacted; the notes don't say whether the new recognizers are on by default)
 
+Why released: New PII recognizers and evaluation tools, plus security fixes (CVEs) and supply-chain hardening
 
+Tools impacted: Presidio analyzer (detection), Image Redactor (DICOM medical images), pip installation, CI/CD pipeline, evaluation framework
 
+Other changes:
 
+&#x20; - New recognizers: US NPI, UK postcode, UK passport, UK vehicle registration, Nigerian NIN and vehicle registration, medical entities, plus a Hugging Face NER recognizer
 
+&#x20; - Detection fixes: Italian driver license pattern (was missing matches); context words wrongly matched as substrings
 
+&#x20; - Image Redactor: no longer treats all DICOM metadata as patient data; now checks patient and name fields
 
+&#x20; - Security: fixed CVE-2024-47874, CVE-2025-54121, CVE-2025-2953, CVE-2025-3730; CI/CD and Docker images pinned against supply-chain attacks
 
+&#x20; - New: "pip install presidio" installs analyzer and anonymizer; regex timeout setting (default 60s); GPU/CPU selection; ONNX support for GLiNER
 
+&#x20; - Evaluation framework: LLM-as-a-judge, sampling and dataset support
 
+&#x20; - README clarifies Presidio has no authentication by design; broken docs links fixed
+
+Most important change: Detection changed: new recognizers plus fixes for missed matches, so what gets redacted can differ after upgrade
 
 
 
