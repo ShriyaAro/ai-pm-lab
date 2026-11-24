@@ -1,0 +1,121 @@
+note_id,category,model,summary,words,R1_risk_correct,R2_key_change,R3_right_category,R4_no_wrong_facts,R5_inference_marked,R6_analytics_structure,R7_priority_order,R8_privacy_structure,R9_length,R10_no_change_format,overall,notes
+dbt-core-01,analytics,gpt-6-luna,"no tracking risk
+
+- **Data collection:** No collection changes noted.
+- **Analytics reporting:** `dbt build --write-catalog` writes `catalog.json` again; spurious `TableNotFound` errors during analyze are fixed.
+- **Other:** dbt and dbt-oss PyPI wheels now support Python 3.10; test helpers were added.",41,pass,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,pass,
+dbt-core-01,analytics,gpt-6-sol,"No tracking risk.
+- **Data collection:** No changes noted.
+- **Analytics reporting:** `dbt build --write-catalog` writes `catalog.json` again. Fixed spurious `TableNotFound` errors during analyze.
+- **Other:** Minimum supported Python version for the dbt and dbt-oss PyPI wheels is 3.10. Added integration-test helpers.",42,pass,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,pass,
+dbt-core-02,analytics,gpt-6-luna,"no tracking risk
+
+- **Data collection:** ClickHouse adds connection-level settings, profile-schema default database wiring, literal `?` support, and dbt identification in the HTTP User-Agent.
+- **Analytics reporting:** Adds native Databricks metric view materializations; preserves compiled SQL output for inline compile commands in quiet mode.
+- **Other:** Adds package/project agent-skill installation behind `ai_provider`; fixes and hardens the dbt-docs-server Docker image; updates dbt v2 CLI branding.",64,fail,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,fail,failed to mention tracking risk
+dbt-core-02,analytics,gpt-6-sol,"no tracking risk — no tracking-breaking change is described.
+
+- **Data collection:** ClickHouse adds connection-level settings, synchronous-operation defaults, profile-schema database mapping, and support for literal `?` in SQL.
+- **Analytics reporting:** dbt supports native Databricks metric view materializations. ClickHouse query logs identify dbt as `dbt/<version>`, and quiet-mode inline compilation preserves compiled SQL output.
+- **Other:** Agent skills can be installed from packages and project skill paths when `ai_provider` is enabled. The dbt-docs-server Docker image and build instructions are fixed; dbt v2 CLI branding is updated.",85,pass,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,pass,
+fides-07,privacy,gpt-6-luna,"no tracking risk
+
+- **Why released:** Fixes stuck or incorrectly handled privacy requests, property creation failures, and unreliable troubleshooting downloads.
+- **Software/tools impacted:** Fides DSR and privacy-request workflows, ConnectionConfig, property creation, and diagnostics downloads.
+- **Other changes:**
+  - Prevents DSRs getting stuck when an async task’s ConnectionConfig is deleted or disabled; avoids watchdog errors for requests paused for manual input and incorrect requeuing of manual-task DSRs.
+  - Retries recreate missing erasure tasks from the current graph if task creation failed silently.
+  - Property form paths and actions work during creation; diagnostic ZIPs stream directly instead of relying on storage configuration.",100,pass,pass,pass,pass,pass,N/A,N/A,,pass,N/A,pass,
+fides-07,privacy,gpt-6-sol,"no tracking risk — Fides was released to fix stalled privacy requests and reliability issues.
+
+- **Why released:** DSRs could get stuck or be incorrectly requeued or errored.
+- **Impacted:** Fides privacy-request workflows, property creation, and troubleshooting-data downloads.
+- **Other fixes:**
+  - DSRs no longer get stuck when an async task connection is deleted or disabled, or when erasure-task creation fails silently.
+  - Requests paused for manual input are no longer incorrectly errored; connection updates no longer requeue manual-task DSRs.
+  - Property form paths and actions now work during creation; diagnostics ZIPs stream directly without requiring storage configuration.",98,pass,pass,pass,pass,pass,N/A,N/A,,pass,,pass,
+fides-08,privacy,gpt-6-luna,"Tracking risk: Database connections now use dynamic credential resolution, a change labeled high-risk.
+
+1. **Why released:** Add support for resolving database credentials dynamically through AWS Secrets Manager.
+2. **Tools impacted:** Fides database connections, AWS Secrets Manager, and SQLAlchemy database engines.
+3. **Everything else:**
+   - Added a configurable database connection `pool_recycle` setting.
+   - Refactored database engines to resolve credentials per connection.
+   - Updated API client comment labels to distinguish them from user comments.",72,fail,pass,pass,pass,pass,N/A,N/A,,pass,N/A,fail,the tracking risk mentioned is not tracking risk
+fides-08,privacy,gpt-6-sol,"No tracking risk identified; database connection handling changed and is marked high-risk.
+- **Why released:** To support dynamic database credentials through AWS Secrets Manager.
+- **Impacted:** Fides database connections, AWS Secrets Manager, SQLAlchemy, and API client comments.
+- **Other changes:**
+  - Added SecretProvider and DBCredentialProvider.
+  - Routed all database connections through DBCredentialProvider and switched engines to SQLAlchemy’s per-connection creator pattern.
+  - Added a configurable `pool_recycle` setting and clarified that API client comments come from the API client, not the user.",80,pass,pass,pass,pass,pass,N/A,N/A,,pass,,pass,
+posthog-js-05,analytics,gpt-6-luna,"no tracking risk
+
+- **Data collection:** Fixed session replay snapshot rebuilding when a root element already exists, and kept mutation batches replaying when mutations have invalid targets or parents.
+- **Reporting:** No reporting changes noted.
+- **Other:** Buffered text changes now keep only the final value per node; attribute mutation storage was simplified.",53,fail,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,fail,"tracking risk exisits, failed to mention"
+posthog-js-05,analytics,gpt-6-sol,"No tracking risk.
+- **Data collection:** Buffered text changes now retain the final value per node; attribute mutation storage was simplified.
+- **Analytics review:** Session replay now rebuilds snapshots when the replay document already has a root element.
+- **Other:** Replay continues through mutation batches when a removal has the wrong parent or an addition targets a leaf node.",59,fail,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,fail,"tracking risk exisits, failed to mention"
+posthog-js-06,analytics,gpt-6-luna,"Tracking risk: Histogram bucket changes can affect metric collection; invalid bounds are dropped, and later bounds differences use the first sample’s buckets with a warning.
+
+- **Data collection:** `metrics.histogram()` now accepts configurable `bounds`, which `beforeSend` can modify. The first sample fixes bounds until client reset.
+- **Analytics reporting:** Experimental `posthog.flags.request.duration` now uses new millisecond buckets, changing the metric’s buckets and p50/p95 resolution.
+- **Other:** Updated `@posthog/core` to 1.64.0 and `@posthog/types` to 1.421.0.",72,fail,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,fail,the tracking risk mentioned is not tracking risk
+posthog-js-06,analytics,gpt-6-sol,"Tracking risk: histogram samples with invalid bounds are dropped.
+- **Data collection:** `metrics.histogram()` accepts custom bucket bounds, which `beforeSend` can change. The first sample fixes the bounds until the client resets; later samples with different bounds use the fixed buckets and log a warning.
+- **Reporting:** The experimental `posthog.flags.request.duration` histogram has new buckets, changing its p50 and p95 resolution.
+- **Other:** Updated `@posthog/core` to 1.64.0 and `@posthog/types` to 1.421.0.",69,fail,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,fail,the tracking risk mentioned is not tracking risk
+presidio-09,privacy,gpt-6-luna,"no tracking risk — detection results and scores are unchanged.
+
+- **Why released:** Security updates hardened container images and refreshed locked dependencies; Python 3.10 support was dropped after end of life.
+- **Tools impacted:** Presidio Analyzer and Anonymizer images; Analyzer’s Transformers and GLiNER integrations; Image Redactor. Saved spaCy pipelines using `hf_token_pipe` will no longer load.
+- **Everything else:**
+  - Added distroless image variants and configurable context-aware enhancement for the Analyzer.
+  - Updated Pillow requirements and DICOM redaction for Pillow 13.
+  - Fixed documentation publishing, canonical links, sitemap, and the documented anonymizer port mapping.",93,pass,pass,pass,pass,pass,N/A,N/A,,pass,N/A,pass,
+presidio-09,privacy,gpt-6-sol,"Tracking risk: saved spaCy pipelines referencing `hf_token_pipe` no longer load. This release focuses on security hardening and compatibility updates.
+
+- **Why released:** Harden container images and address dependency security advisories.
+- **Impacted tools:** Presidio Analyzer, Anonymizer and Image Redactor; all packages now require Python 3.11 or newer.
+- **Other changes:**
+  - **Data collection:** Analyzer detection results and scores are unchanged. Optional YAML settings now control context-aware detection; configurations without them retain their defaults.
+  - **Reporting:** No analytics reporting changes are noted.
+  - **Operations:** Distroless images are available; default images no longer include `curl`. The documentation domain and a documented Anonymizer port mapping were fixed.",104,fail,fail,pass,pass,pass,N/A,N/A,,pass,,fail,
+presidio-10,privacy,gpt-6-luna,"no tracking risk
+
+1. **Why released:** Improve PII detection and evaluation, fix detection and image-redaction issues, and address security vulnerabilities.
+2. **Tools impacted:** Presidio Analyzer adds NER options and recognizers for medical, US, UK, and Nigerian data; GLiNER gains ONNX support. Image Redactor now filters DICOM metadata more accurately.
+3. **Everything else:**
+   - Evaluation adds LLM-as-a-judge, sampling, and dataset support.
+   - CI/CD dependencies and Docker images were pinned or updated; `ruff` and `build` installs are hash-pinned.
+   - A `presidio` PyPI meta-package installs Analyzer and Anonymizer; README security guidance and documentation links were updated or fixed.",95,fail,pass,pass,pass,pass,N/A,N/A,,pass,N/A,fail,
+presidio-10,privacy,gpt-6-sol,"No tracking risk — This Presidio release adds PII detection capabilities, fixes detection and redaction behavior, and strengthens security.
+
+- **Why released:** To expand recognizer coverage, improve PII detection quality, fix vulnerabilities, and make `pip install presidio` install both core packages.
+- **Tools impacted:** Presidio Analyzer, Image Redactor, and the `presidio-analyzer` and `presidio-anonymizer` packages.
+- **Other changes:**
+  - **Data collection:** New medical, HuggingFace, and country-specific recognizers; fixes for missed Italian driver-license matches, context matching, and DICOM metadata filtering.
+  - **Analytics reporting:** Evaluation now supports LLM-as-a-judge, sampling, and a dataset interface.
+  - **Operations and security:** Added ONNX support, GPU control, and a regex timeout; fixed listed CVEs, pinned build dependencies, and clarified authentication guidance.",113,fail,pass,pass,pass,pass,N/A,N/A,,pass,,fail,
+segment-analytics-next-03,analytics,gpt-6-luna,"Tracking risk: When the cookie and localStorage disagree on `anonymousId`, the cookie now wins and all stores are resynced to it.
+
+- **Data collection:** This is unconditional; previously the behavior was opt-in. When the values already agree, behavior is unchanged.
+- **Analytics reporting:** No reporting changes noted.
+- **Other:** `resolveAnonymousIdConflicts` was removed; any `false` value in load options is ignored.",60,pass,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,pass,
+segment-analytics-next-03,analytics,gpt-6-sol,"Tracking risk: If the cookie and localStorage disagree on `anonymousId`, tracking now uses the cookie’s ID by default instead of the localStorage ID.
+
+- **Data collection:** All stores are resynced to the cookie’s `anonymousId`; matching IDs are unaffected.
+- **Analytics reporting:** In conflict cases, the `anonymousId` used for reporting may change.
+- **Other:** The `resolveAnonymousIdConflicts` option was removed. An explicit `false` setting is now ignored.",65,pass,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,pass,
+segment-analytics-next-04,analytics,gpt-6-luna,"Tracking risk: Enabling `resolveAnonymousIdConflicts` changes which `anonymousId` is used when stores disagree; it is off by default.
+
+- **Data collection:** When enabled, the shared cookie wins conflicts and all stores are resynced. The `is-email` dependency update also makes email-format detection stricter for `identify`, `track`, `page`, and `group` calls.
+- **Reporting:** No reporting changes noted.
+- **Other:** `is-email` was upgraded from 0.1.1 to 1.0.2 because the older version was blocked by the npm registry’s curation policy.",75,pass,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,pass,
+segment-analytics-next-04,analytics,gpt-6-sol,"Tracking risk: Stricter email-format detection may change how some trait values are classified in `identify`, `track`, `page`, and `group` calls.
+
+- **Data collection:** Check integrations that depend on email classification; the dependency update was required to unblock releases under npm registry policy.
+- **Analytics reporting:** No reporting changes are noted, but reports that rely on this classification could be affected.
+- **Other:** An opt-in option fixes `anonymousId` conflicts across subdomains by resyncing stores to the shared cookie. It is off by default, so existing behavior is unchanged unless enabled.",89,pass,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,pass,
