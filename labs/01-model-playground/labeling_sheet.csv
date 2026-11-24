@@ -1,4 +1,4 @@
-note_id,category,model,summary,words,R1_risk_correct,R2_key_change,R3_right_category,R4_no_wrong_facts,R5_inference_marked,R6_analytics_structure,R7_priority_order,R8_privacy_structure,R9_length,R10_no_change_format,overall,notes
+﻿note_id,category,model,summary,words,R1_risk_correct,R2_key_change,R3_right_category,R4_no_wrong_facts,R5_inference_marked,R6_analytics_structure,R7_priority_order,R8_privacy_structure,R9_length,R10_no_change_format,overall,notes
 dbt-core-01,analytics,gpt-6-luna,"no tracking risk
 
 - **Data collection:** No collection changes noted.
@@ -12,7 +12,7 @@ dbt-core-02,analytics,gpt-6-luna,"no tracking risk
 
 - **Data collection:** ClickHouse adds connection-level settings, profile-schema default database wiring, literal `?` support, and dbt identification in the HTTP User-Agent.
 - **Analytics reporting:** Adds native Databricks metric view materializations; preserves compiled SQL output for inline compile commands in quiet mode.
-- **Other:** Adds package/project agent-skill installation behind `ai_provider`; fixes and hardens the dbt-docs-server Docker image; updates dbt v2 CLI branding.",64,fail,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,fail,failed to mention tracking risk
+- **Other:** Adds package/project agent-skill installation behind `ai_provider`; fixes and hardens the dbt-docs-server Docker image; updates dbt v2 CLI branding.",64,pass,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,pass,"failed to mention tracking risk | Review 24 Nov: R1 changed fail->pass (says no tracking risk; key says None, same as sol). ClickHouse filed under data collection vs key reporting: R3 kept pass (lenient, defensible) | overall recalculated fail->pass"
 dbt-core-02,analytics,gpt-6-sol,"no tracking risk — no tracking-breaking change is described.
 
 - **Data collection:** ClickHouse adds connection-level settings, synchronous-operation defaults, profile-schema database mapping, and support for literal `?` in SQL.
@@ -25,7 +25,7 @@ fides-07,privacy,gpt-6-luna,"no tracking risk
 - **Other changes:**
   - Prevents DSRs getting stuck when an async task’s ConnectionConfig is deleted or disabled; avoids watchdog errors for requests paused for manual input and incorrect requeuing of manual-task DSRs.
   - Retries recreate missing erasure tasks from the current graph if task creation failed silently.
-  - Property form paths and actions work during creation; diagnostic ZIPs stream directly instead of relying on storage configuration.",100,pass,pass,pass,pass,pass,N/A,N/A,,pass,N/A,pass,
+  - Property form paths and actions work during creation; diagnostic ZIPs stream directly instead of relying on storage configuration.",100,pass,pass,pass,pass,pass,N/A,N/A,pass,pass,N/A,pass,"Review 24 Nov: R8 set to pass by format check (why released, tools impacted, other changes)"
 fides-07,privacy,gpt-6-sol,"no tracking risk — Fides was released to fix stalled privacy requests and reliability issues.
 
 - **Why released:** DSRs could get stuck or be incorrectly requeued or errored.
@@ -33,7 +33,7 @@ fides-07,privacy,gpt-6-sol,"no tracking risk — Fides was released to fix stall
 - **Other fixes:**
   - DSRs no longer get stuck when an async task connection is deleted or disabled, or when erasure-task creation fails silently.
   - Requests paused for manual input are no longer incorrectly errored; connection updates no longer requeue manual-task DSRs.
-  - Property form paths and actions now work during creation; diagnostics ZIPs stream directly without requiring storage configuration.",98,pass,pass,pass,pass,pass,N/A,N/A,,pass,,pass,
+  - Property form paths and actions now work during creation; diagnostics ZIPs stream directly without requiring storage configuration.",98,pass,pass,pass,pass,pass,N/A,N/A,pass,pass,N/A,pass,"Review 24 Nov: R8 set to pass by format check (why released, tools impacted, other changes)"
 fides-08,privacy,gpt-6-luna,"Tracking risk: Database connections now use dynamic credential resolution, a change labeled high-risk.
 
 1. **Why released:** Add support for resolving database credentials dynamically through AWS Secrets Manager.
@@ -41,14 +41,14 @@ fides-08,privacy,gpt-6-luna,"Tracking risk: Database connections now use dynamic
 3. **Everything else:**
    - Added a configurable database connection `pool_recycle` setting.
    - Refactored database engines to resolve credentials per connection.
-   - Updated API client comment labels to distinguish them from user comments.",72,fail,pass,pass,pass,pass,N/A,N/A,,pass,N/A,fail,the tracking risk mentioned is not tracking risk
+   - Updated API client comment labels to distinguish them from user comments.",72,fail,pass,pass,pass,pass,N/A,N/A,pass,pass,N/A,fail,"the tracking risk mentioned is not tracking risk | Review 24 Nov: R8 set to pass by format check (why released, tools impacted, other changes)"
 fides-08,privacy,gpt-6-sol,"No tracking risk identified; database connection handling changed and is marked high-risk.
 - **Why released:** To support dynamic database credentials through AWS Secrets Manager.
 - **Impacted:** Fides database connections, AWS Secrets Manager, SQLAlchemy, and API client comments.
 - **Other changes:**
   - Added SecretProvider and DBCredentialProvider.
   - Routed all database connections through DBCredentialProvider and switched engines to SQLAlchemy’s per-connection creator pattern.
-  - Added a configurable `pool_recycle` setting and clarified that API client comments come from the API client, not the user.",80,pass,pass,pass,pass,pass,N/A,N/A,,pass,,pass,
+  - Added a configurable `pool_recycle` setting and clarified that API client comments come from the API client, not the user.",80,pass,pass,pass,pass,pass,N/A,N/A,pass,pass,N/A,pass,"Review 24 Nov: R8 set to pass by format check (why released, tools impacted, other changes)"
 posthog-js-05,analytics,gpt-6-luna,"no tracking risk
 
 - **Data collection:** Fixed session replay snapshot rebuilding when a root element already exists, and kept mutation batches replaying when mutations have invalid targets or parents.
@@ -74,7 +74,7 @@ presidio-09,privacy,gpt-6-luna,"no tracking risk — detection results and score
 - **Everything else:**
   - Added distroless image variants and configurable context-aware enhancement for the Analyzer.
   - Updated Pillow requirements and DICOM redaction for Pillow 13.
-  - Fixed documentation publishing, canonical links, sitemap, and the documented anonymizer port mapping.",93,pass,pass,pass,pass,pass,N/A,N/A,,pass,N/A,pass,
+  - Fixed documentation publishing, canonical links, sitemap, and the documented anonymizer port mapping.",93,pass,pass,pass,pass,pass,N/A,N/A,pass,pass,N/A,pass,"Review 24 Nov: R8 set to pass by format check (why released, tools impacted, other changes)"
 presidio-09,privacy,gpt-6-sol,"Tracking risk: saved spaCy pipelines referencing `hf_token_pipe` no longer load. This release focuses on security hardening and compatibility updates.
 
 - **Why released:** Harden container images and address dependency security advisories.
@@ -82,7 +82,7 @@ presidio-09,privacy,gpt-6-sol,"Tracking risk: saved spaCy pipelines referencing 
 - **Other changes:**
   - **Data collection:** Analyzer detection results and scores are unchanged. Optional YAML settings now control context-aware detection; configurations without them retain their defaults.
   - **Reporting:** No analytics reporting changes are noted.
-  - **Operations:** Distroless images are available; default images no longer include `curl`. The documentation domain and a documented Anonymizer port mapping were fixed.",104,fail,fail,pass,pass,pass,N/A,N/A,,pass,,fail,
+  - **Operations:** Distroless images are available; default images no longer include `curl`. The documentation domain and a documented Anonymizer port mapping were fixed.",104,fail,pass,pass,pass,pass,N/A,N/A,pass,pass,N/A,fail,"R1 fail: calls the spaCy pipeline break a tracking risk; key says None (false alarm). Review 24 Nov: R2 changed fail->pass (key change is in its first line) | Review 24 Nov: R8 set to pass by format check (why released, tools impacted, other changes)"
 presidio-10,privacy,gpt-6-luna,"no tracking risk
 
 1. **Why released:** Improve PII detection and evaluation, fix detection and image-redaction issues, and address security vulnerabilities.
@@ -90,7 +90,7 @@ presidio-10,privacy,gpt-6-luna,"no tracking risk
 3. **Everything else:**
    - Evaluation adds LLM-as-a-judge, sampling, and dataset support.
    - CI/CD dependencies and Docker images were pinned or updated; `ruff` and `build` installs are hash-pinned.
-   - A `presidio` PyPI meta-package installs Analyzer and Anonymizer; README security guidance and documentation links were updated or fixed.",95,fail,pass,pass,pass,pass,N/A,N/A,,pass,N/A,fail,
+   - A `presidio` PyPI meta-package installs Analyzer and Anonymizer; README security guidance and documentation links were updated or fixed.",95,N/A,pass,pass,pass,pass,N/A,N/A,pass,pass,N/A,pass,"Review 24 Nov: R1 changed fail->N/A (answer key says Unsure, so R1 is N/A by rule) | Review 24 Nov: R8 set to pass by format check (why released, tools impacted, other changes) | overall recalculated fail->pass"
 presidio-10,privacy,gpt-6-sol,"No tracking risk — This Presidio release adds PII detection capabilities, fixes detection and redaction behavior, and strengthens security.
 
 - **Why released:** To expand recognizer coverage, improve PII detection quality, fix vulnerabilities, and make `pip install presidio` install both core packages.
@@ -98,7 +98,7 @@ presidio-10,privacy,gpt-6-sol,"No tracking risk — This Presidio release adds P
 - **Other changes:**
   - **Data collection:** New medical, HuggingFace, and country-specific recognizers; fixes for missed Italian driver-license matches, context matching, and DICOM metadata filtering.
   - **Analytics reporting:** Evaluation now supports LLM-as-a-judge, sampling, and a dataset interface.
-  - **Operations and security:** Added ONNX support, GPU control, and a regex timeout; fixed listed CVEs, pinned build dependencies, and clarified authentication guidance.",113,fail,pass,pass,pass,pass,N/A,N/A,,pass,,fail,
+  - **Operations and security:** Added ONNX support, GPU control, and a regex timeout; fixed listed CVEs, pinned build dependencies, and clarified authentication guidance.",113,N/A,pass,pass,pass,pass,N/A,N/A,pass,pass,N/A,pass,"Review 24 Nov: R1 changed fail->N/A (answer key says Unsure, so R1 is N/A by rule) | Review 24 Nov: R8 set to pass by format check (why released, tools impacted, other changes) | overall recalculated fail->pass"
 segment-analytics-next-03,analytics,gpt-6-luna,"Tracking risk: When the cookie and localStorage disagree on `anonymousId`, the cookie now wins and all stores are resynced to it.
 
 - **Data collection:** This is unconditional; previously the behavior was opt-in. When the values already agree, behavior is unchanged.
@@ -108,7 +108,7 @@ segment-analytics-next-03,analytics,gpt-6-sol,"Tracking risk: If the cookie and 
 
 - **Data collection:** All stores are resynced to the cookie’s `anonymousId`; matching IDs are unaffected.
 - **Analytics reporting:** In conflict cases, the `anonymousId` used for reporting may change.
-- **Other:** The `resolveAnonymousIdConflicts` option was removed. An explicit `false` setting is now ignored.",65,pass,pass,pass,pass,pass,pass,pass,N/A,pass,N/A,pass,
+- **Other:** The `resolveAnonymousIdConflicts` option was removed. An explicit `false` setting is now ignored.",65,pass,pass,pass,pass,fail,pass,pass,N/A,pass,N/A,fail,"Review 24 Nov: R5 changed pass->fail. Unmarked inference: ""the anonymousId used for reporting may change"" is not in the release note (rule 1, decided 11 Nov) | overall recalculated pass->fail"
 segment-analytics-next-04,analytics,gpt-6-luna,"Tracking risk: Enabling `resolveAnonymousIdConflicts` changes which `anonymousId` is used when stores disagree; it is off by default.
 
 - **Data collection:** When enabled, the shared cookie wins conflicts and all stores are resynced. The `is-email` dependency update also makes email-format detection stricter for `identify`, `track`, `page`, and `group` calls.
